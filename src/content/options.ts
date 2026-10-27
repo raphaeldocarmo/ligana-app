@@ -1,0 +1,116 @@
+/**
+ * Opções dos formulários. Os `value` são gravados no banco e usados nas análises:
+ * não mude um valor existente sem migrar os dados. Os `label` podem mudar à vontade.
+ */
+
+export type Option<V extends string = string> = { value: V; label: string; hint?: string }
+
+export const CATEGORIES = [
+  { value: 'kitchen', label: 'Cozinha e restaurantes', hint: 'Cozinheiro, auxiliar, garçom, chapeiro' },
+  { value: 'service', label: 'Atendimento e comércio', hint: 'Caixa, balconista, vendedor, repositor' },
+  { value: 'delivery', label: 'Entregas', hint: 'Moto, bike, carro ou a pé' },
+  { value: 'events', label: 'Eventos', hint: 'Garçom, recepção, montagem, apoio' },
+  { value: 'cleaning', label: 'Limpeza e serviços gerais', hint: 'Faxina, diarista, auxiliar de limpeza' },
+  { value: 'construction', label: 'Construção e manutenção', hint: 'Pedreiro, pintor, eletricista, ajudante' },
+  { value: 'other', label: 'Outras oportunidades', hint: 'Conte pra gente o que falta aqui' },
+] as const satisfies readonly Option[]
+
+/** Regiões urbanas de Campo Grande (MS). */
+export const REGIONS = [
+  { value: 'centro', label: 'Centro' },
+  { value: 'segredo', label: 'Segredo' },
+  { value: 'prosa', label: 'Prosa' },
+  { value: 'bandeira', label: 'Bandeira' },
+  { value: 'anhanduizinho', label: 'Anhanduizinho' },
+  { value: 'lagoa', label: 'Lagoa' },
+  { value: 'imbirussu', label: 'Imbirussu' },
+  { value: 'outside', label: 'Fora de Campo Grande' },
+  { value: 'unknown', label: 'Não sei a região' },
+] as const satisfies readonly Option[]
+
+export const ENGAGEMENT_TYPES = [
+  { value: 'freelance', label: 'Freela', hint: 'Por dia, turno ou evento' },
+  { value: 'temporary', label: 'Temporário', hint: 'Por algumas semanas ou meses' },
+  { value: 'permanent', label: 'Fixo', hint: 'Trabalho permanente' },
+] as const satisfies readonly Option[]
+
+export const FREQUENCIES = [
+  { value: 'weekly', label: 'Toda semana' },
+  { value: 'monthly', label: 'Algumas vezes por mês' },
+  { value: 'occasional', label: 'De vez em quando' },
+  { value: 'seasonal', label: 'Só em datas ou eventos específicos' },
+] as const satisfies readonly Option[]
+
+export const URGENCIES = [
+  { value: 'same_day', label: 'Pra hoje mesmo' },
+  { value: 'one_two_days', label: 'Em 1 ou 2 dias' },
+  { value: 'same_week', label: 'Na mesma semana' },
+  { value: 'planned', label: 'Consigo planejar com mais tempo' },
+] as const satisfies readonly Option[]
+
+export const PILOT_INTEREST = [
+  { value: 'yes', label: 'Sim, quero participar' },
+  { value: 'maybe', label: 'Talvez, quero saber mais' },
+  { value: 'no', label: 'Agora não' },
+] as const satisfies readonly Option[]
+
+export const EXPERIENCE = [
+  { value: 'none', label: 'Ainda não tenho experiência' },
+  { value: 'lt_1y', label: 'Menos de 1 ano' },
+  { value: '1_3y', label: 'De 1 a 3 anos' },
+  { value: 'gt_3y', label: 'Mais de 3 anos' },
+] as const satisfies readonly Option[]
+
+export const WEEKDAYS = [
+  { value: 'mon', label: 'Seg' },
+  { value: 'tue', label: 'Ter' },
+  { value: 'wed', label: 'Qua' },
+  { value: 'thu', label: 'Qui' },
+  { value: 'fri', label: 'Sex' },
+  { value: 'sat', label: 'Sáb' },
+  { value: 'sun', label: 'Dom' },
+] as const satisfies readonly Option[]
+
+export const PERIODS = [
+  { value: 'morning', label: 'Manhã' },
+  { value: 'afternoon', label: 'Tarde' },
+  { value: 'evening', label: 'Noite' },
+  { value: 'overnight', label: 'Madrugada' },
+] as const satisfies readonly Option[]
+
+/**
+ * Faixas de remuneração. Separadas por unidade (dia x mês) porque freela e fixo
+ * são pagos de formas diferentes; o prefixo do valor guarda a unidade.
+ */
+export const PAY_RANGE_GROUPS = [
+  {
+    label: 'Por dia (diária ou freela)',
+    options: [
+      { value: 'day_lt_100', label: 'Até R$ 100 por dia' },
+      { value: 'day_100_150', label: 'R$ 100 a R$ 150 por dia' },
+      { value: 'day_150_200', label: 'R$ 150 a R$ 200 por dia' },
+      { value: 'day_200_300', label: 'R$ 200 a R$ 300 por dia' },
+      { value: 'day_gt_300', label: 'Mais de R$ 300 por dia' },
+    ],
+  },
+  {
+    label: 'Por mês (fixo ou temporário)',
+    options: [
+      { value: 'month_lt_1600', label: 'Até R$ 1.600 por mês' },
+      { value: 'month_1600_2200', label: 'R$ 1.600 a R$ 2.200 por mês' },
+      { value: 'month_2200_3000', label: 'R$ 2.200 a R$ 3.000 por mês' },
+      { value: 'month_gt_3000', label: 'Mais de R$ 3.000 por mês' },
+    ],
+  },
+  {
+    label: 'Outro',
+    options: [{ value: 'varies', label: 'Varia / depende do trabalho' }],
+  },
+] as const
+
+type PayRangeOption = (typeof PAY_RANGE_GROUPS)[number]['options'][number]
+
+export const PAY_RANGES = PAY_RANGE_GROUPS.flatMap((group): PayRangeOption[] => [...group.options])
+
+export const values = <T extends readonly { value: string }[]>(options: T) =>
+  options.map((option) => option.value) as unknown as [T[number]['value'], ...T[number]['value'][]]

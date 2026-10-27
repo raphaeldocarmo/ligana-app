@@ -1,0 +1,89 @@
+@import 'tailwindcss';
+@import '@fontsource-variable/nunito';
+
+/*
+ * Design tokens da Ligana. Toda cor e fonte da interface vem daqui.
+ * Contraste conferido (WCAG AA): texto `ink` sobre `orange` (4,8:1) e `green` (5,2:1).
+ */
+@theme {
+  --font-sans: 'Nunito Variable', ui-rounded, 'SF Pro Rounded', system-ui, sans-serif;
+
+  /* Laranja: energia, oportunidade, ação */
+  --color-orange: #ff7a2f;
+  --color-orange-strong: #f26b1d;
+  --color-orange-text: #b4410b;
+  --color-orange-soft: #ffeadb;
+
+  /* Verde: crescimento, renda, resultado */
+  --color-green: #3dbe6b;
+  --color-green-strong: #2fa85a;
+  --color-green-text: #167a3e;
+  --color-green-soft: #e2f5e8;
+
+  /* Verde-escuro: confiança. É também a cor do texto. */
+  --color-ink: #0b3b2c;
+  --color-ink-soft: #4a5c55;
+  --color-ink-deep: #072a1f;
+
+  /* Base clara */
+  --color-cream: #fff9f3;
+  --color-surface: #ffffff;
+  --color-line: #e8dfd5;
+
+  /* Feedback */
+  --color-danger: #b42318;
+  --color-danger-soft: #fdecea;
+
+  --radius-card: 1.5rem;
+  --shadow-card: 0 1px 2px rgb(11 59 44 / 0.06), 0 8px 24px rgb(11 59 44 / 0.06);
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    @apply bg-cream font-sans text-ink antialiased;
+    font-size: 1.0625rem;
+    line-height: 1.6;
+  }
+
+  :focus-visible {
+    outline: 3px solid var(--color-orange-strong);
+    outline-offset: 3px;
+  }
+
+  /* Seções alcançadas por âncora não ficam escondidas sob o cabeçalho fixo. */
+  [id] {
+    scroll-margin-top: 5.5rem;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}
+
+@keyframes rise-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@utility animate-rise-in {
+  animation: rise-in 0.4s ease-out both;
+}
