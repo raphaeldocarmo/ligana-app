@@ -19,9 +19,9 @@ export class LeadStoreNotConfiguredError extends Error {
 }
 
 export class LeadStoreError extends Error {
-  constructor(code: string | undefined) {
-    // Só o código do erro: a mensagem do banco pode conter dados do lead.
-    super(`Falha ao gravar lead no Supabase (código ${code ?? 'desconhecido'}).`)
+  constructor(code: string | undefined, status: number) {
+    // Só código e status HTTP: a mensagem do banco pode conter dados do lead.
+    super(`Falha ao gravar lead no Supabase (código ${code || 'desconhecido'}, HTTP ${status}).`)
     this.name = 'LeadStoreError'
   }
 }
@@ -83,9 +83,9 @@ export function toWorkerRow(lead: WorkerLead, consentAt: string) {
 export async function saveLead(lead: Lead): Promise<void> {
   const client = getClient()
   const consentAt = new Date().toISOString()
-  const { error } =
+  const { error, status } =
     lead.audience === 'employer'
       ? await client.from('employer_leads').insert(toEmployerRow(lead, consentAt))
       : await client.from('worker_leads').insert(toWorkerRow(lead, consentAt))
-  if (error) throw new LeadStoreError(error.code)
+  if (error) throw new LeadStoreError(error.code, status)
 }
