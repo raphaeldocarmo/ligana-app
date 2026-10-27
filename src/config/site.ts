@@ -5,11 +5,28 @@
 
 const env = (value: string | undefined) => (value && value.trim() ? value.trim() : null)
 
+/**
+ * Aceita o endereço com ou sem `https://` e com `/` no final. Um valor inválido
+ * não pode derrubar o build: cai no endereço da Vercel ou no local.
+ */
+export function normalizeSiteUrl(value: string | null | undefined): string | null {
+  if (!value) return null
+  const withProtocol = /^https?:\/\//i.test(value) ? value : `https://${value}`
+  try {
+    return new URL(withProtocol).origin
+  } catch {
+    return null
+  }
+}
+
 export const siteConfig = {
   name: 'Ligana',
   slogan: 'Conexões que geram renda.',
   city: 'Campo Grande — MS',
-  url: env(process.env.NEXT_PUBLIC_SITE_URL) ?? 'http://localhost:3000',
+  url:
+    normalizeSiteUrl(env(process.env.NEXT_PUBLIC_SITE_URL)) ??
+    normalizeSiteUrl(process.env.VERCEL_PROJECT_PRODUCTION_URL) ??
+    'http://localhost:3000',
   description:
     'A Ligana está chegando a Campo Grande para conectar quem precisa contratar com quem quer trabalhar. Cadastre seu interesse e participe do piloto.',
   contact: {
