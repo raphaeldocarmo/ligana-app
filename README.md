@@ -80,9 +80,10 @@ mudar à vontade, valores não (sem migrar os dados e as restrições da migraç
 ## Ativando a gravação de leads (Supabase)
 
 1. Crie um projeto em [supabase.com](https://supabase.com) (região São Paulo, de preferência).
-2. Rode a migração `supabase/migrations/20261027000000_create_leads.sql`:
-   - pelo painel: **SQL Editor** → cole o arquivo → **Run**; ou
-   - pela CLI: `supabase link --project-ref <ref>` e `supabase db push`.
+2. Crie as tabelas:
+   - pelo painel: **SQL Editor** → **New query** → cole o arquivo `supabase/setup.sql` inteiro → **Run**
+     (pode rodar mais de uma vez sem problema); ou
+   - pela CLI: `supabase link --project-ref <ref>` e `supabase db push` (usa `supabase/migrations/`).
 3. Em **Project Settings → API**, copie a **Project URL** e a chave **service_role**.
 4. Defina no servidor (`.env.local` ou variáveis da hospedagem):
    ```
