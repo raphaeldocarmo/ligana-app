@@ -7,13 +7,13 @@ import { useLeadForm } from '@/components/forms/useLeadForm'
 import { forWorkers } from '@/content/landing'
 import {
   CATEGORIES,
-  DAILY_PAY_RANGE_GROUPS,
-  ENGAGEMENT_TYPES,
   EXPERIENCE,
   PERIODS,
   ROLES,
   WEEKDAYS,
+  WORKER_ENGAGEMENT_TYPES,
   WORK_REGIONS,
+  payRangeGroupsFor,
 } from '@/content/options'
 import { formatPhoneInput } from '@/lib/phone'
 
@@ -68,6 +68,15 @@ export function WorkerForm() {
   const onWorkRegionsChange = (next: string[]) => {
     const pickedAny = next.includes('any') && !values.workRegions.includes('any')
     setValue('workRegions', pickedAny ? ['any'] : next.filter((value) => value !== 'any'))
+  }
+
+  // A faixa de pagamento acompanha as modalidades: freela mostra valor por dia; temporário/permanente, por mês.
+  const onEngagementChange = (engagementTypes: string[]) => {
+    setValue('engagementTypes', engagementTypes)
+    const stillValid = payRangeGroupsFor(engagementTypes).some((group) =>
+      group.options.some((option) => option.value === values.payRange),
+    )
+    if (values.payRange && !stillValid) setValue('payRange', '')
   }
 
   const showDetail = values.roles.includes('other_role') || values.categories.includes('other')
@@ -198,21 +207,21 @@ export function WorkerForm() {
         <ChoiceGroup
           id={fieldId('engagementTypes')}
           name="worker-engagementTypes"
-          label="Que tipo de trabalho te interessa?"
+          label="Que oportunidades te interessam?"
           multiple
-          options={ENGAGEMENT_TYPES}
+          options={WORKER_ENGAGEMENT_TYPES}
           value={values.engagementTypes}
-          onValueChange={(value) => setValue('engagementTypes', value)}
+          onValueChange={onEngagementChange}
           error={errors.engagementTypes}
         />
         <SelectField
           id={fieldId('payRange')}
           name="payRange"
-          label="Quanto você espera receber por diária?"
+          label="Quanto você espera receber?"
           hint="Só pra gente entender. Não é promessa de valor."
           optional
           placeholder="Prefiro não informar"
-          groups={DAILY_PAY_RANGE_GROUPS}
+          groups={payRangeGroupsFor(values.engagementTypes)}
           value={values.payRange}
           onValueChange={(value) => setValue('payRange', value)}
           error={errors.payRange}

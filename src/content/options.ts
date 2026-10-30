@@ -34,10 +34,20 @@ export const WORK_REGIONS = [
   ...REGIONS.filter((region) => region.value !== 'outside' && region.value !== 'unknown'),
 ] as const satisfies readonly Option[]
 
+/**
+ * As três modalidades da Ligana. Mesmos valores para os dois públicos (o matching vai cruzar
+ * os dois lados), com rótulos escritos para cada um.
+ */
 export const ENGAGEMENT_TYPES = [
-  { value: 'freelance', label: 'Diária', hint: 'Por dia, turno ou evento' },
-  { value: 'temporary', label: 'Temporário', hint: 'Por algumas semanas ou meses' },
-  { value: 'permanent', label: 'Permanente', hint: 'Vaga fixa' },
+  { value: 'freelance', label: 'Freela / diária / turno', hint: 'Eventos, coberturas e reforços de última hora' },
+  { value: 'temporary', label: 'Temporário', hint: 'Duração definida, temporadas e projetos' },
+  { value: 'permanent', label: 'Permanente', hint: 'Trabalho contínuo, de longo prazo' },
+] as const satisfies readonly Option[]
+
+export const WORKER_ENGAGEMENT_TYPES = [
+  { value: 'freelance', label: 'Interesse em freelas', hint: 'Diárias, turnos e eventos' },
+  { value: 'temporary', label: 'Interesse em trabalhos temporários', hint: 'Por algumas semanas ou meses' },
+  { value: 'permanent', label: 'Interesse em oportunidades permanentes', hint: 'Trabalho contínuo' },
 ] as const satisfies readonly Option[]
 
 /** Funções mais comuns no começo da Ligana. `category` liga cada função a uma área (CATEGORIES). */
@@ -213,7 +223,6 @@ export function payRangeGroupsFor(engagementTypes: readonly string[]) {
   )
 }
 
-export const DAILY_PAY_RANGE_GROUPS = PAY_RANGE_GROUPS.filter((group) => group.unit !== 'month')
 
 export const values = <T extends readonly { value: string }[]>(options: T) =>
   options.map((option) => option.value) as unknown as [T[number]['value'], ...T[number]['value'][]]

@@ -133,4 +133,13 @@ describe('leadSchema', () => {
   it('profissional pode deixar as funções em branco', () => {
     expect(leadSchema.parse({ ...validWorker, roles: undefined })).toMatchObject({ roles: [] })
   })
+
+  it('profissional pode marcar as três modalidades, com faixa mensal', () => {
+    const lead = leadSchema.parse({
+      ...validWorker,
+      engagementTypes: ['freelance', 'temporary', 'permanent'],
+      payRange: 'month_2200_3000',
+    })
+    expect(lead).toMatchObject({ engagementTypes: ['freelance', 'temporary', 'permanent'], payRange: 'month_2200_3000' })
+  })
 })

@@ -2,7 +2,12 @@
  * Textos da landing page de pré-lançamento.
  *
  * Posicionamento: a Ligana está CRIANDO uma forma mais inteligente de conectar empresas e
- * profissionais por compatibilidade (matching). O motor de matching ainda não existe.
+ * profissionais por compatibilidade (matching), nas três modalidades: freelas e trabalhos
+ * pontuais, temporários e permanentes. O diferencial não é a modalidade, é identificar quem é
+ * compatível, avisar os mais adequados, confirmar o interesse e facilitar a conexão.
+ * O motor de matching ainda não existe.
+ *
+ * Nunca posicionar a Ligana como só de freelas, só de diárias ou só de empregos fixos.
  *
  * Regras de comunicação:
  * - falar no futuro/planejado: "estamos criando", "a Ligana vai", "participe do lançamento";
@@ -24,7 +29,7 @@ export const hero = {
   badge: 'Pré-lançamento em Campo Grande/MS',
   title: 'A pessoa certa. Na hora que você precisa.',
   subtitle:
-    'Estamos criando uma forma mais inteligente de conectar empresas e profissionais. A Ligana vai identificar as melhores combinações entre necessidades e habilidades, sem buscas intermináveis.',
+    'Estamos criando uma maneira mais inteligente de conectar empresas a profissionais compatíveis. Seja para um freela, uma oportunidade temporária ou uma contratação permanente.',
   ctaHire: 'Quero acesso antecipado para contratar',
   ctaWork: 'Quero receber oportunidades',
   note: 'Cadastre seu interesse e participe da primeira fase da Ligana.',
@@ -32,9 +37,9 @@ export const hero = {
 
 export const forCompanies = {
   eyebrow: 'Para empresas',
-  title: 'Você cuida do seu negócio. A Ligana encontra quem pode ajudar.',
+  title: 'Precisou de alguém? A Ligana encontra.',
   subtitle:
-    'Precisou de reforço na equipe? A Ligana está sendo desenvolvida para identificar profissionais compatíveis com sua necessidade, considerando experiência, localização, disponibilidade e remuneração.',
+    'De um reforço para hoje a uma contratação permanente, a Ligana está sendo desenvolvida para identificar profissionais compatíveis com o que sua empresa precisa.',
   benefits: [
     {
       icon: 'clock',
@@ -48,13 +53,13 @@ export const forCompanies = {
     },
     {
       icon: 'calendar',
-      title: 'Disponibilidade que importa',
-      text: 'A Ligana vai buscar quem está disponível no período que você precisa.',
+      title: 'Do freela à vaga permanente',
+      text: 'Cobertura de ausência, reforço de fim de semana, temporada ou contratação de longo prazo: tudo no mesmo lugar.',
     },
     {
       icon: 'spark',
       title: 'Conexões proativas',
-      text: 'O sistema foi pensado para recomendar profissionais, em vez de depender só de buscas manuais.',
+      text: 'A ideia é a Ligana avisar os profissionais mais adequados e confirmar o interesse deles antes de te apresentar.',
     },
   ],
   cta: 'Quero participar do lançamento',
@@ -73,8 +78,9 @@ export const matching = {
   eyebrow: 'Matching inteligente',
   title: 'Não é sobre encontrar qualquer pessoa. É sobre encontrar a pessoa certa.',
   subtitle:
-    'A Ligana está sendo desenvolvida para entender o que cada empresa precisa e identificar profissionais com maior compatibilidade para aquela oportunidade.',
+    'A Ligana está sendo desenvolvida para entender o que cada empresa precisa, identificar os profissionais mais compatíveis, avisar os mais adequados, confirmar o interesse deles e facilitar a conexão.',
   disclaimer: 'Exemplo ilustrativo de como a Ligana funcionará.',
+  example: 'Exemplo: um freela de sábado',
   request: {
     label: 'A empresa precisa de',
     items: [
@@ -88,10 +94,10 @@ export const matching = {
     label: 'Matching Ligana',
     steps: [
       'Analisa os requisitos essenciais',
-      'Identifica profissionais elegíveis',
-      'Prioriza a compatibilidade',
-      'Recomenda as melhores opções',
-      'Facilita o interesse dos dois lados',
+      'Identifica os profissionais compatíveis',
+      'Avisa os mais adequados',
+      'Confirma o interesse deles',
+      'Facilita a conexão com a empresa',
     ],
   },
   profiles: [
@@ -127,13 +133,32 @@ export const matching = {
     },
   ],
   profilesLabel: 'Profissionais analisados',
+  criteriaTitle: 'O que conta em cada modalidade',
+  criteriaIntro: 'A compatibilidade vai considerar os critérios que importam para cada tipo de oportunidade.',
+  criteria: [
+    {
+      title: 'Freelas e trabalhos pontuais',
+      examples: 'Diárias, turnos, eventos, coberturas e reforços de última hora',
+      items: ['Disponibilidade no dia e horário', 'Localização', 'Habilidades para a função'],
+    },
+    {
+      title: 'Temporários',
+      examples: 'Duração definida, demandas sazonais e projetos',
+      items: ['Disponibilidade para o período', 'Habilidades e experiência', 'Localização'],
+    },
+    {
+      title: 'Permanentes',
+      examples: 'Trabalho contínuo e posições de longo prazo',
+      items: ['Experiência', 'Habilidades', 'Condições de trabalho', 'Interesses profissionais'],
+    },
+  ],
 } as const
 
 export const forWorkers = {
   eyebrow: 'Para profissionais',
   title: 'As oportunidades certas encontram você.',
   subtitle:
-    'Estamos criando uma plataforma que vai identificar oportunidades compatíveis com sua experiência, habilidades, localização e disponibilidade.',
+    'Quer fazer freelas, encontrar trabalhos temporários ou conquistar uma oportunidade permanente? Cadastre seu perfil para participar da primeira fase da Ligana.',
   benefits: [
     {
       icon: 'gift',
@@ -143,7 +168,7 @@ export const forWorkers = {
     {
       icon: 'spark',
       title: 'Oportunidades mais relevantes',
-      text: 'A Ligana pretende recomendar trabalhos que façam sentido para o seu perfil.',
+      text: 'A Ligana pretende recomendar freelas, temporários e vagas permanentes que façam sentido para o seu perfil.',
     },
     {
       icon: 'check',
@@ -176,20 +201,20 @@ export const howItWorks = {
   employer: {
     title: 'Para empresas',
     steps: [
-      'Informe qual profissional você precisa.',
-      'A Ligana analisa os requisitos e busca compatibilidade.',
-      'Receba recomendações de profissionais interessados.',
-      'Avalie e avance com a contratação.',
+      'Informe de quem você precisa: freela, temporário ou permanente.',
+      'A Ligana analisa os requisitos e identifica os profissionais compatíveis.',
+      'Os mais adequados são avisados e confirmam se têm interesse.',
+      'Receba as recomendações, avalie e avance com a contratação.',
     ],
     cta: 'Quero participar do lançamento',
   },
   worker: {
     title: 'Para profissionais',
     steps: [
-      'Cadastre seu perfil.',
+      'Cadastre seu perfil e diga que tipo de oportunidade te interessa.',
       'Informe suas habilidades e disponibilidade.',
-      'Receba recomendações de oportunidades compatíveis.',
-      'Demonstre interesse nas oportunidades que quiser.',
+      'Seja avisado quando surgir uma oportunidade compatível.',
+      'Confirme interesse nas oportunidades que quiser.',
     ],
     cta: 'Quero entrar na lista de profissionais',
   },
@@ -208,7 +233,12 @@ export const faq: { title: string; employer: FaqItem[]; worker: FaqItem[] } = {
     {
       question: 'Como a Ligana vai funcionar?',
       answer:
-        'Você vai informar de quem precisa, quando, onde e quanto pretende pagar. A Ligana vai cruzar essas informações com o perfil dos profissionais cadastrados e recomendar os mais compatíveis.',
+        'Você vai informar de quem precisa (um freela, um temporário ou uma contratação permanente), quando, onde e em que condições. A Ligana vai cruzar essas informações com o perfil dos profissionais, avisar os mais compatíveis, confirmar o interesse deles e te apresentar quem topou.',
+    },
+    {
+      question: 'A Ligana é só para freelas?',
+      answer:
+        'Não. A Ligana está sendo criada para as três situações: freelas e trabalhos pontuais (diárias, turnos, eventos, coberturas), trabalhos temporários e contratações permanentes.',
     },
     {
       question: 'Já existem profissionais cadastrados?',
@@ -230,6 +260,11 @@ export const faq: { title: string; employer: FaqItem[]; worker: FaqItem[] } = {
     {
       question: 'Preciso pagar para me cadastrar?',
       answer: 'Não. O cadastro é gratuito.',
+    },
+    {
+      question: 'Posso me cadastrar para freelas e para vagas fixas?',
+      answer:
+        'Pode. No cadastro, você marca tudo o que te interessa: freelas, trabalhos temporários e oportunidades permanentes.',
     },
     {
       question: 'O cadastro garante trabalho?',

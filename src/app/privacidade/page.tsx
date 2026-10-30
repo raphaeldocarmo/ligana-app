@@ -100,7 +100,8 @@ export default function PrivacyPage() {
               </li>
               <li>
                 Para profissionais: áreas e funções, experiência (opcional), dias, turnos e regiões em que pode
-                trabalhar, tipo de trabalho e expectativa de pagamento por diária (opcional);
+                trabalhar, modalidades de interesse (freela, temporário, permanente) e expectativa de pagamento
+                (opcional);
               </li>
               <li>Suas autorizações (com data e versão desta política).</li>
             </ul>

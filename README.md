@@ -4,7 +4,9 @@
 
 Landing page de **pré-lançamento** da Ligana em Campo Grande (MS). A Ligana está sendo construída para
 conectar empresas e profissionais **por compatibilidade** (função, experiência, disponibilidade,
-localização e remuneração). O motor de matching **ainda não existe**: a página apresenta a proposta,
+localização e remuneração) em três modalidades: **freelas e trabalhos pontuais**, **temporários** e
+**permanentes** (valores `freelance`, `temporary`, `permanent` em `engagement_types`). O diferencial é
+identificar quem é compatível, avisar os mais adequados, confirmar o interesse e facilitar a conexão. O motor de matching **ainda não existe**: a página apresenta a proposta,
 mostra um exemplo ilustrativo e capta leads qualificados para o lançamento.
 
 - Conversão primária: **empresas** com dificuldade de encontrar profissionais (acesso antecipado).

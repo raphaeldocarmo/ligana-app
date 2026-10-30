@@ -155,7 +155,8 @@ export function EmployerForm() {
         <ChoiceGroup
           id={fieldId('engagementTypes')}
           name="employer-engagementTypes"
-          label="Tipo de trabalho"
+          label="Que tipo de oportunidade?"
+          hint="Pode ser um reforço pontual, uma vaga temporária ou uma contratação permanente."
           multiple
           options={ENGAGEMENT_TYPES}
           value={values.engagementTypes}

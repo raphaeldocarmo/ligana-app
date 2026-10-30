@@ -20,3 +20,11 @@ describe('payRangeGroupsFor', () => {
     expect(units(['freelance', 'temporary'])).toEqual(['day', 'month', 'other'])
   })
 })
+
+describe('modalidades', () => {
+  it('empresas e profissionais usam os mesmos valores, com rótulos próprios', async () => {
+    const { ENGAGEMENT_TYPES, WORKER_ENGAGEMENT_TYPES } = await import('@/content/options')
+    expect(WORKER_ENGAGEMENT_TYPES.map((o) => o.value)).toEqual(ENGAGEMENT_TYPES.map((o) => o.value))
+    expect(ENGAGEMENT_TYPES.map((o) => o.label)).toEqual(['Freela / diária / turno', 'Temporário', 'Permanente'])
+  })
+})

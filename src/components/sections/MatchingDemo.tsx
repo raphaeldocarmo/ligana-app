@@ -65,6 +65,7 @@ export function MatchingDemo() {
                 <span aria-hidden="true" className="size-2.5 rounded-full bg-orange" />
                 {matching.request.label}
               </p>
+              <p className="-mt-2 mb-4 text-[0.85rem] font-semibold text-ink-soft">{matching.example}</p>
               <dl className="space-y-3">
                 {matching.request.items.map((item) => (
                   <div key={item.label} className="flex items-center gap-3">
@@ -147,6 +148,35 @@ export function MatchingDemo() {
             </div>
           </div>
         </figure>
+
+        {/* Critérios por modalidade */}
+        <div className="mt-14 sm:mt-16">
+          <div className="mx-auto max-w-2xl text-center">
+            <h3 className="text-2xl font-black text-balance sm:text-3xl">{matching.criteriaTitle}</h3>
+            <p className="mt-3 text-white/80">{matching.criteriaIntro}</p>
+          </div>
+          <ul className="mt-8 grid gap-4 md:grid-cols-3">
+            {matching.criteria.map((group, index) => (
+              <li key={group.title} className="rounded-card border border-white/15 bg-white/5 p-5 sm:p-6">
+                <span
+                  aria-hidden="true"
+                  className={`mb-4 block h-1.5 w-12 rounded-full ${['bg-orange', 'bg-green', 'bg-white'][index]}`}
+                />
+                <h4 className="text-xl font-black">{group.title}</h4>
+                <p className="mt-1 text-[0.95rem] text-white/70">{group.examples}</p>
+                <p className="mt-4 text-sm font-extrabold tracking-wide text-white/60 uppercase">Vai considerar</p>
+                <ul className="mt-2 space-y-2">
+                  {group.items.map((item) => (
+                    <li key={item} className="flex items-center gap-2 font-semibold">
+                      <Icon name="check" className="size-4 shrink-0 text-green" />
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+              </li>
+            ))}
+          </ul>
+        </div>
       </Container>
     </section>
   )
