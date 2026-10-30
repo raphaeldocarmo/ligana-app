@@ -5,12 +5,16 @@ import {
   ENGAGEMENT_TYPES,
   EXPERIENCE,
   FREQUENCIES,
+  HEADCOUNTS,
+  NEED_TIMINGS,
   PAY_RANGES,
   PERIODS,
-  PILOT_INTEREST,
   REGIONS,
-  URGENCIES,
+  ROLES,
+  SEGMENTS,
   WEEKDAYS,
+  WILLINGNESS_TO_PAY,
+  WORK_REGIONS,
   values,
 } from '@/content/options'
 import { normalizeCep } from '@/lib/cep'
@@ -72,6 +76,12 @@ const someOf = <T extends readonly { value: string }[]>(options: T) =>
     .min(1, { error: chooseAtLeastOne })
     .transform((list) => [...new Set(list)])
 
+const optionalSomeOf = <T extends readonly { value: string }[]>(options: T) =>
+  z
+    .array(z.enum(values(options)))
+    .optional()
+    .transform((list) => [...new Set(list ?? [])])
+
 const optionalOneOf = <T extends readonly { value: string }[]>(options: T) =>
   z
     .union([z.enum(values(options)), z.literal('')])
@@ -98,11 +108,9 @@ const common = {
   cep,
   region: oneOf(REGIONS),
   neighborhood: optionalText(80),
-  categories: someOf(CATEGORIES),
   rolesDetail: optionalText(200),
   engagementTypes: someOf(ENGAGEMENT_TYPES),
   payRange: optionalOneOf(PAY_RANGES),
-  pilotInterest: oneOf(PILOT_INTEREST),
   consentProcessing: z.literal(true, {
     error: 'Pra registrar seu interesse, precisamos que você concorde com o uso dos dados.',
   }),
@@ -110,20 +118,32 @@ const common = {
   tracking,
 }
 
+/** Empresa: as áreas (categories) são deduzidas das funções na hora de gravar. */
 export const employerLeadSchema = z.object({
   audience: z.literal('employer'),
   ...common,
-  companyName: optionalText(120),
+  companyName: z
+    .string({ error: 'Conte o nome do estabelecimento.' })
+    .trim()
+    .min(2, { error: 'Conte o nome do estabelecimento.' })
+    .max(120, { error: 'Use no máximo 120 caracteres.' }),
+  segment: oneOf(SEGMENTS),
+  roles: someOf(ROLES),
+  headcount: oneOf(HEADCOUNTS),
+  needTiming: oneOf(NEED_TIMINGS),
   frequency: oneOf(FREQUENCIES),
-  urgency: oneOf(URGENCIES),
+  willingnessToPay: oneOf(WILLINGNESS_TO_PAY),
 })
 
 export const workerLeadSchema = z.object({
   audience: z.literal('worker'),
   ...common,
+  categories: someOf(CATEGORIES),
+  roles: optionalSomeOf(ROLES),
   experience: optionalOneOf(EXPERIENCE),
   availableDays: someOf(WEEKDAYS),
   availablePeriods: someOf(PERIODS),
+  workRegions: someOf(WORK_REGIONS),
 })
 
 export const leadSchema = z.discriminatedUnion('audience', [employerLeadSchema, workerLeadSchema])

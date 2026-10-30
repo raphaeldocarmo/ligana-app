@@ -9,10 +9,12 @@ describe('leadSchema', () => {
     expect(lead).toMatchObject({
       audience: 'employer',
       name: 'Ana Souza',
-      companyName: null,
+      companyName: 'Hamburgueria do Centro',
       whatsapp: '+5567999998888',
       cep: '79002000',
-      categories: ['kitchen', 'events'],
+      roles: ['waiter', 'grill', 'delivery'],
+      needTiming: 'next_7_days',
+      willingnessToPay: 'depends',
       payRange: null,
       consentContact: false,
       tracking: { utmSource: 'instagram' },
@@ -27,6 +29,8 @@ describe('leadSchema', () => {
       cep: null,
       neighborhood: 'Mata do Jacinto',
       rolesDetail: null,
+      roles: ['cook'],
+      workRegions: ['prosa', 'centro'],
       experience: '1_3y',
       tracking: {},
     })
@@ -49,21 +53,21 @@ describe('leadSchema', () => {
           'categories',
           'engagementTypes',
           'name',
-          'pilotInterest',
           'region',
           'whatsapp',
+          'workRegions',
         ].sort(),
       )
     }
   })
 
   it('recusa valores fora das opções', () => {
-    const result = leadSchema.safeParse({ ...validEmployer, categories: ['hacker'], urgency: 'ontem' })
+    const result = leadSchema.safeParse({ ...validEmployer, roles: ['hacker'], needTiming: 'ontem' })
     expect(result.success).toBe(false)
     if (!result.success) {
       expect(toFieldErrors(result.error)).toMatchObject({
-        categories: expect.any(String),
-        urgency: 'Escolha uma opção.',
+        roles: expect.any(String),
+        needTiming: 'Escolha uma opção.',
       })
     }
   })
@@ -83,5 +87,26 @@ describe('leadSchema', () => {
     const result = leadSchema.safeParse({ ...validEmployer, cep: '7900' })
     expect(result.success).toBe(false)
     if (!result.success) expect(toFieldErrors(result.error).cep).toContain('8 números')
+  })
+
+  it('empresa precisa informar estabelecimento, segmento, função, quantidade e a pesquisa de pagamento', () => {
+    const result = leadSchema.safeParse({
+      ...validEmployer,
+      companyName: ' ',
+      segment: '',
+      roles: [],
+      headcount: undefined,
+      willingnessToPay: undefined,
+    })
+    expect(result.success).toBe(false)
+    if (!result.success) {
+      expect(Object.keys(toFieldErrors(result.error)).sort()).toEqual(
+        ['companyName', 'headcount', 'roles', 'segment', 'willingnessToPay'].sort(),
+      )
+    }
+  })
+
+  it('profissional pode deixar as funções em branco', () => {
+    expect(leadSchema.parse({ ...validWorker, roles: undefined })).toMatchObject({ roles: [] })
   })
 })

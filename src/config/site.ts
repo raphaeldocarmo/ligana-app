@@ -28,7 +28,7 @@ export const siteConfig = {
     normalizeSiteUrl(process.env.VERCEL_PROJECT_PRODUCTION_URL) ??
     'http://localhost:3000',
   description:
-    'A Ligana está chegando a Campo Grande para conectar quem precisa contratar com quem quer trabalhar. Cadastre seu interesse e participe do piloto.',
+    'A Ligana aproxima empresas e profissionais para trabalhos por diária, temporários e agendados. Começando por Campo Grande/MS: cadastre sua necessidade ou seu interesse.',
   contact: {
     email: env(process.env.NEXT_PUBLIC_CONTACT_EMAIL),
     whatsapp: env(process.env.NEXT_PUBLIC_CONTACT_WHATSAPP),

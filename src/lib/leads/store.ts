@@ -3,6 +3,7 @@ import 'server-only'
 import { createClient } from '@supabase/supabase-js'
 
 import type { EmployerLead, Lead, WorkerLead } from '@/lib/leads/schema'
+import { categoriesForRoles } from '@/content/options'
 import { PRIVACY_POLICY_VERSION } from '@/content/privacy'
 
 /**
@@ -44,11 +45,10 @@ function commonColumns(lead: Lead, consentAt: string) {
     cep: lead.cep,
     region: lead.region,
     neighborhood: lead.neighborhood,
-    categories: lead.categories,
+    roles: lead.roles,
     roles_detail: lead.rolesDetail,
     engagement_types: lead.engagementTypes,
     pay_range: lead.payRange,
-    pilot_interest: lead.pilotInterest,
     consent_processing: lead.consentProcessing,
     consent_contact: lead.consentContact,
     consent_at: consentAt,
@@ -67,15 +67,21 @@ export function toEmployerRow(lead: EmployerLead, consentAt: string) {
   return {
     ...commonColumns(lead, consentAt),
     company_name: lead.companyName,
+    segment: lead.segment,
+    categories: categoriesForRoles(lead.roles),
+    headcount: lead.headcount,
+    need_timing: lead.needTiming,
     frequency: lead.frequency,
-    urgency: lead.urgency,
+    willingness_to_pay: lead.willingnessToPay,
   }
 }
 
 export function toWorkerRow(lead: WorkerLead, consentAt: string) {
   return {
     ...commonColumns(lead, consentAt),
+    categories: lead.categories,
     experience: lead.experience,
+    work_regions: lead.workRegions,
     available_days: lead.availableDays,
     available_periods: lead.availablePeriods,
   }

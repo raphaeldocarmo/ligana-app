@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useRef, useState, type FormEvent } from 'react'
 
-import { track } from '@/lib/analytics'
+import { FORM_EVENTS, track } from '@/lib/analytics'
 import type { LeadErrorCode, LeadResponse } from '@/lib/leads/handler'
 import { employerLeadSchema, toFieldErrors, workerLeadSchema, type Audience, type FieldErrors } from '@/lib/leads/schema'
 import { readTracking } from '@/lib/utm'
@@ -35,7 +35,7 @@ export function useLeadForm<V extends Record<string, FormValue>>(audience: Audie
   const onStart = useCallback(() => {
     if (tracked.current) return
     tracked.current = true
-    track({ name: 'form_start', audience })
+    track({ name: FORM_EVENTS[audience].start })
   }, [audience])
 
   const setValue = useCallback(<K extends keyof V>(field: K, value: V[K]) => {
@@ -58,7 +58,7 @@ export function useLeadForm<V extends Record<string, FormValue>>(audience: Audie
   const fail = (reason: SubmitError) => {
     setStatus('error')
     setSubmitError(reason)
-    track({ name: 'form_submit_error', audience, reason })
+    track({ name: 'form_submission_error', form: FORM_EVENTS[audience].form, reason })
   }
 
   const onSubmit = async (event: FormEvent<HTMLFormElement>) => {
@@ -79,7 +79,7 @@ export function useLeadForm<V extends Record<string, FormValue>>(audience: Audie
       setErrors(fieldErrors)
       setStatus('idle')
       setSubmitError(null)
-      track({ name: 'form_submit_error', audience, reason: 'validation' })
+      track({ name: 'form_submission_error', form: FORM_EVENTS[audience].form, reason: 'validation' })
       focusFirstError(fieldErrors)
       return
     }
@@ -95,7 +95,7 @@ export function useLeadForm<V extends Record<string, FormValue>>(audience: Audie
       const result = (await response.json().catch(() => null)) as LeadResponse | null
       if (response.ok && result?.ok) {
         setStatus('success')
-        track({ name: 'form_submit_success', audience })
+        track({ name: FORM_EVENTS[audience].success })
         return
       }
       if (result && !result.ok && result.fieldErrors) {

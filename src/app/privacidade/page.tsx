@@ -55,7 +55,7 @@ export default function PrivacyPage() {
           </p>
           <p className="mt-6 rounded-2xl bg-green-soft p-5 text-lg">
             <strong>Resumindo:</strong> a Ligana está em pré-lançamento. Pedimos só o necessário para
-            entender quem precisa contratar e quem quer trabalhar em Campo Grande e organizar um piloto. Não
+            aproximar quem precisa contratar de quem quer trabalhar em Campo Grande. Não
             pedimos CPF, documentos ou dados bancários, não vendemos seus dados e você pode pedir para apagá-los
             quando quiser.
           </p>
@@ -81,9 +81,10 @@ export default function PrivacyPage() {
 
           <Section title="2. Em que fase a Ligana está">
             <p>
-              A Ligana ainda <strong>não está funcionando</strong>. Nesta fase de pré-lançamento, não realizamos
-              contratações, não intermediamos pagamentos e não garantimos vagas, renda ou profissionais. O
-              cadastro serve para demonstrar interesse e, se você quiser, participar de um piloto.
+              A Ligana está em <strong>pré-lançamento</strong>, com uma operação assistida: nossa equipe recebe
+              os pedidos das empresas e procura, entre as pessoas cadastradas, quem tem o perfil certo. Não somos
+              empregadora, não intermediamos pagamentos e não garantimos vagas, renda, profissionais, prazos ou
+              comparecimento. A contratação é combinada diretamente entre a empresa e o profissional.
             </p>
           </Section>
 
@@ -92,12 +93,16 @@ export default function PrivacyPage() {
             <ul>
               <li>Nome e WhatsApp;</li>
               <li>Região de Campo Grande e, se quiser, CEP e bairro;</li>
-              <li>Nome da empresa ou negócio (opcional, só para quem contrata);</li>
               <li>
-                Tipos de trabalho, tipo de contratação, frequência, urgência, disponibilidade, experiência e
-                faixa de remuneração (estes dois últimos são opcionais);
+                Para empresas: nome do estabelecimento, segmento, funções procuradas, quantidade de pessoas, tipo
+                de contratação, quando e com que frequência precisa, faixa de pagamento prevista (opcional) e sua
+                opinião sobre pagar pela intermediação;
               </li>
-              <li>Seu interesse no piloto e suas autorizações (com data e versão desta política).</li>
+              <li>
+                Para profissionais: áreas e funções, experiência (opcional), dias, turnos e regiões em que pode
+                trabalhar, tipo de trabalho e expectativa de pagamento por diária (opcional);
+              </li>
+              <li>Suas autorizações (com data e versão desta política).</li>
             </ul>
             <p>
               Também guardamos, junto do cadastro, a origem da visita: parâmetros de campanha (UTM) do link
@@ -117,10 +122,14 @@ export default function PrivacyPage() {
           <Section title="4. Para que usamos">
             <ul>
               <li>Entender quantas pessoas e empresas têm interesse, em quais áreas e regiões da cidade;</li>
-              <li>No piloto, aproximar pessoas e oportunidades que estejam perto uma da outra (pelo CEP ou bairro);</li>
-              <li>Planejar e organizar o piloto da Ligana em Campo Grande;</li>
               <li>
-                Falar com você pelo WhatsApp sobre novidades e o piloto, <strong>somente se você autorizar</strong>{' '}
+                Analisar os pedidos das empresas e indicar profissionais compatíveis (função, disponibilidade,
+                região e expectativa de pagamento), aproximando quem está perto pelo CEP ou bairro;
+              </li>
+              <li>Entender se as empresas veem valor em pagar pela intermediação, para definir o modelo da Ligana;</li>
+              <li>
+                Falar com você pelo WhatsApp sobre sua solicitação, oportunidades e novidades,{' '}
+                <strong>somente se você autorizar</strong>{' '}
                 marcando a caixa específica no formulário.
               </li>
             </ul>
@@ -157,7 +166,7 @@ export default function PrivacyPage() {
 
           <Section title="8. Por quanto tempo guardamos">
             <p>
-              Guardamos os dados até o fim do piloto ou por até {RETENTION_MONTHS} meses após o cadastro, o que
+              Guardamos os dados por até {RETENTION_MONTHS} meses após o cadastro ou até o fim da fase de testes, o que
               acontecer primeiro. Depois disso, eles são apagados ou transformados em números gerais que não
               identificam ninguém. Se você pedir a exclusão antes, apagamos assim que possível.
             </p>

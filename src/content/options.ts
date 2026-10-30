@@ -28,10 +28,73 @@ export const REGIONS = [
   { value: 'unknown', label: 'Não sei a região' },
 ] as const satisfies readonly Option[]
 
+/** Regiões em que a pessoa aceita trabalhar: as 7 regiões da cidade ou qualquer uma. */
+export const WORK_REGIONS = [
+  { value: 'any', label: 'Qualquer região' },
+  ...REGIONS.filter((region) => region.value !== 'outside' && region.value !== 'unknown'),
+] as const satisfies readonly Option[]
+
 export const ENGAGEMENT_TYPES = [
-  { value: 'freelance', label: 'Freela', hint: 'Por dia, turno ou evento' },
+  { value: 'freelance', label: 'Diária', hint: 'Por dia, turno ou evento' },
   { value: 'temporary', label: 'Temporário', hint: 'Por algumas semanas ou meses' },
-  { value: 'permanent', label: 'Fixo', hint: 'Trabalho permanente' },
+  { value: 'permanent', label: 'Permanente', hint: 'Vaga fixa' },
+] as const satisfies readonly Option[]
+
+/** Funções mais comuns no começo da Ligana. `category` liga cada função a uma área (CATEGORIES). */
+export const ROLES = [
+  { value: 'waiter', label: 'Garçom / Garçonete', category: 'kitchen' },
+  { value: 'cook', label: 'Cozinheiro(a)', category: 'kitchen' },
+  { value: 'kitchen_assistant', label: 'Auxiliar de cozinha', category: 'kitchen' },
+  { value: 'grill', label: 'Chapeiro(a)', category: 'kitchen' },
+  { value: 'dishwasher', label: 'Lavador(a) de louça', category: 'kitchen' },
+  { value: 'bartender', label: 'Bartender / Barman', category: 'kitchen' },
+  { value: 'cashier', label: 'Atendente / Caixa', category: 'service' },
+  { value: 'stock', label: 'Repositor(a) / Estoque', category: 'service' },
+  { value: 'delivery', label: 'Entregador(a)', category: 'delivery' },
+  { value: 'event_staff', label: 'Apoio em eventos', category: 'events' },
+  { value: 'cleaning', label: 'Limpeza / Serviços gerais', category: 'cleaning' },
+  { value: 'maintenance', label: 'Manutenção / Reparos', category: 'construction' },
+  { value: 'other_role', label: 'Outra função', category: 'other' },
+] as const satisfies readonly (Option & { category: (typeof CATEGORIES)[number]['value'] })[]
+
+export type RoleValue = (typeof ROLES)[number]['value']
+export type CategoryValue = (typeof CATEGORIES)[number]['value']
+
+/** Áreas (CATEGORIES) que correspondem às funções escolhidas, sem repetir. */
+export function categoriesForRoles(roles: readonly string[]): CategoryValue[] {
+  const found = ROLES.filter((role) => roles.includes(role.value)).map((role) => role.category)
+  return [...new Set(found)]
+}
+
+export const SEGMENTS = [
+  { value: 'restaurant', label: 'Restaurante' },
+  { value: 'burger', label: 'Hamburgueria' },
+  { value: 'pizzeria', label: 'Pizzaria' },
+  { value: 'bar', label: 'Bar / Choperia' },
+  { value: 'bakery_cafe', label: 'Padaria / Cafeteria' },
+  { value: 'events_buffet', label: 'Eventos / Buffet' },
+  { value: 'retail', label: 'Comércio / Loja' },
+  { value: 'other', label: 'Outro' },
+] as const satisfies readonly Option[]
+
+export const HEADCOUNTS = [
+  { value: '1', label: '1 pessoa' },
+  { value: '2_3', label: '2 a 3' },
+  { value: '4_5', label: '4 a 5' },
+  { value: '6_plus', label: '6 ou mais' },
+] as const satisfies readonly Option[]
+
+export const NEED_TIMINGS = [
+  { value: 'today_tomorrow', label: 'Hoje ou amanhã' },
+  { value: 'next_7_days', label: 'Nos próximos 7 dias' },
+  { value: 'future_date', label: 'Numa data mais pra frente' },
+  { value: 'no_current_need', label: 'Agora não, mas costumo precisar' },
+] as const satisfies readonly Option[]
+
+export const WILLINGNESS_TO_PAY = [
+  { value: 'yes', label: 'Sim' },
+  { value: 'depends', label: 'Depende do valor' },
+  { value: 'no', label: 'Não' },
 ] as const satisfies readonly Option[]
 
 export const FREQUENCIES = [
@@ -84,7 +147,8 @@ export const PERIODS = [
  */
 export const PAY_RANGE_GROUPS = [
   {
-    label: 'Por dia (diária ou freela)',
+    unit: 'day',
+    label: 'Por dia (diária)',
     options: [
       { value: 'day_lt_100', label: 'Até R$ 100 por dia' },
       { value: 'day_100_150', label: 'R$ 100 a R$ 150 por dia' },
@@ -94,7 +158,8 @@ export const PAY_RANGE_GROUPS = [
     ],
   },
   {
-    label: 'Por mês (fixo ou temporário)',
+    unit: 'month',
+    label: 'Por mês (temporário ou permanente)',
     options: [
       { value: 'month_lt_1600', label: 'Até R$ 1.600 por mês' },
       { value: 'month_1600_2200', label: 'R$ 1.600 a R$ 2.200 por mês' },
@@ -103,6 +168,7 @@ export const PAY_RANGE_GROUPS = [
     ],
   },
   {
+    unit: 'other',
     label: 'Outro',
     options: [{ value: 'varies', label: 'Varia / depende do trabalho' }],
   },
@@ -111,6 +177,21 @@ export const PAY_RANGE_GROUPS = [
 type PayRangeOption = (typeof PAY_RANGE_GROUPS)[number]['options'][number]
 
 export const PAY_RANGES = PAY_RANGE_GROUPS.flatMap((group): PayRangeOption[] => [...group.options])
+
+/**
+ * Faixas que fazem sentido para o tipo de contratação escolhido: diária mostra valores
+ * por dia; temporário/permanente, por mês. Sem escolha ainda, mostra tudo.
+ */
+export function payRangeGroupsFor(engagementTypes: readonly string[]) {
+  if (engagementTypes.length === 0) return PAY_RANGE_GROUPS
+  const wantsDay = engagementTypes.includes('freelance')
+  const wantsMonth = engagementTypes.includes('temporary') || engagementTypes.includes('permanent')
+  return PAY_RANGE_GROUPS.filter(
+    (group) => group.unit === 'other' || (group.unit === 'day' && wantsDay) || (group.unit === 'month' && wantsMonth),
+  )
+}
+
+export const DAILY_PAY_RANGE_GROUPS = PAY_RANGE_GROUPS.filter((group) => group.unit !== 'month')
 
 export const values = <T extends readonly { value: string }[]>(options: T) =>
   options.map((option) => option.value) as unknown as [T[number]['value'], ...T[number]['value'][]]

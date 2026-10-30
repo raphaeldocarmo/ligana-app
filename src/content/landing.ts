@@ -1,124 +1,178 @@
 /**
- * Textos da landing page. Tom: brasileiro, simples, próximo e positivo.
- * Regra: nada de prometer emprego, contratação, renda ou profissionais verificados.
- * Tudo que descreve o produto é o funcionamento PLANEJADO: a Ligana ainda está chegando.
+ * Textos da landing page. Tom: brasileiro, simples, próximo e confiável.
+ *
+ * Regras (estamos validando o negócio, não vendendo um marketplace pronto):
+ * - nada de prometer emprego, contratação, renda, prazo de atendimento ou comparecimento;
+ * - nada de depoimentos, números ou avaliações que não existem;
+ * - nada de "matching automático", pagamento integrado ou verificação: a operação é assistida.
  */
 
-export const hero = {
-  badge: 'Em breve em Campo Grande — MS',
-  title: 'O trabalho certo encontra a pessoa certa.',
-  subtitle:
-    'A Ligana está chegando a Campo Grande para conectar quem precisa contratar com quem quer trabalhar. De forma simples, rápida e mais próxima de você.',
-  ctaHire: 'Quero contratar',
-  ctaWork: 'Quero trabalhar',
-  note: 'Cadastro gratuito, leva cerca de 2 minutos. Sem senha.',
+export const nav = {
+  employer: 'Para empresas',
+  employerShort: 'Empresas',
+  worker: 'Para profissionais',
+  workerShort: 'Profissionais',
+  cta: 'Preciso de profissionais',
 }
 
-export const problem = {
-  title: 'Encontrar alguém para trabalhar não deveria ser tão difícil.',
-  perspectives: [
+export const hero = {
+  badge: 'Começando por Campo Grande — MS',
+  title: 'Quem precisa de trabalho encontra. Quem precisa de gente também.',
+  subtitle:
+    'A Ligana aproxima empresas e profissionais para oportunidades de trabalho por diária, temporárias e agendadas. Estamos começando por Campo Grande/MS.',
+  ctaHire: 'Quero contratar profissionais',
+  ctaWork: 'Quero encontrar trabalho',
+  note: 'Cadastro gratuito e rápido, sem senha.',
+}
+
+export const forCompanies = {
+  eyebrow: 'Para empresas',
+  title: 'Precisando de reforço na sua equipe?',
+  subtitle:
+    'Encontre profissionais interessados em trabalhar por diária ou em demandas pontuais, sem depender apenas de indicações e grupos de mensagens.',
+  benefits: [
     {
-      audience: 'employer',
-      who: 'Para quem contrata',
-      quote: 'Preciso de alguém para amanhã. Onde encontro?',
-      detail: 'Grupo de WhatsApp, indicação de conhecido, cartaz na porta… e a vaga continua aberta.',
+      icon: 'clock',
+      title: 'Menos tempo procurando',
+      text: 'Informe sua necessidade e deixe a Ligana ajudar a identificar profissionais interessados.',
     },
     {
-      audience: 'worker',
-      who: 'Para quem trabalha',
-      quote: 'Estou disponível. Onde encontro uma oportunidade?',
-      detail: 'Tem gente com vontade e tempo livre que não fica sabendo de quem está precisando.',
+      icon: 'calendar',
+      title: 'Contratação conforme sua demanda',
+      text: 'Encontre pessoas para diárias, reforços de fim de semana ou períodos específicos.',
+    },
+    {
+      icon: 'list',
+      title: 'Mais informações para decidir',
+      text: 'Conheça experiência, disponibilidade e expectativas dos profissionais antes de avançar.',
+    },
+    {
+      icon: 'chat',
+      title: 'Atendimento próximo',
+      text: 'Estamos começando com uma operação assistida para entender e atender melhor cada solicitação.',
     },
   ],
-  conclusion: 'A Ligana nasceu para aproximar essas duas necessidades.',
-} as const
+  cta: 'Preciso de profissionais',
+  formTitle: 'Conte o que você precisa',
+  formSubtitle: 'Leva uns 2 minutos. A gente usa essas respostas para buscar pessoas com o perfil certo.',
+  submit: 'Enviar minha solicitação',
+  successTitle: 'Pronto! Recebemos sua solicitação.',
+  successText:
+    'Nossa equipe vai entrar em contato pelo WhatsApp informado conforme a disponibilidade da operação neste começo. Ainda não conseguimos garantir prazo de atendimento.',
+  successNoContact:
+    'Como você preferiu não receber mensagens, não vamos te chamar no WhatsApp. Se mudar de ideia, é só preencher de novo marcando a autorização.',
+}
+
+export const forWorkers = {
+  eyebrow: 'Para profissionais',
+  title: 'Seu próximo trabalho pode estar mais perto do que você imagina.',
+  subtitle:
+    'Cadastre seu interesse para receber informações sobre oportunidades de trabalho compatíveis com sua experiência e disponibilidade.',
+  benefits: [
+    { icon: 'gift', title: 'Cadastro gratuito', text: 'Você não paga nada para mostrar seu interesse.' },
+    { icon: 'spark', title: 'Mais oportunidades', text: 'Receba informações sobre trabalhos que combinam com você.' },
+    {
+      icon: 'check',
+      title: 'Você escolhe',
+      text: 'Veja local, horário, atividade e pagamento antes de aceitar.',
+    },
+    { icon: 'clock', title: 'Flexibilidade', text: 'Diga quando e onde você pode trabalhar.' },
+  ],
+  cta: 'Quero receber oportunidades',
+  formTitle: 'Faça seu cadastro',
+  formSubtitle: 'É rápido. Marque as opções que combinam com você.',
+  submit: 'Quero receber oportunidades',
+  successTitle: 'Pronto! Seu cadastro foi registrado.',
+  successText:
+    'Quando aparecer uma oportunidade que combina com você, podemos te chamar pelo WhatsApp informado. O cadastro não garante trabalho nem contratação imediata.',
+  successNoContact:
+    'Como você preferiu não receber mensagens, não vamos te chamar no WhatsApp. O cadastro não garante trabalho nem contratação imediata.',
+}
 
 export const howItWorks = {
-  eyebrow: 'Como a Ligana vai funcionar',
+  eyebrow: 'Como funciona',
   title: 'Simples para os dois lados.',
-  intro: 'É assim que estamos planejando a Ligana. Seu cadastro agora ajuda a gente a acertar no piloto.',
-  flows: [
-    {
-      audience: 'employer',
-      title: 'Para quem contrata',
-      steps: [
-        'Conte de quem você precisa.',
-        'Informe quando, onde e quanto pretende pagar.',
-        'Receba conexões com profissionais compatíveis.',
-        'Converse e combine os próximos passos.',
-      ],
-    },
-    {
-      audience: 'worker',
-      title: 'Para quem trabalha',
-      steps: [
-        'Conte o que você sabe fazer.',
-        'Informe onde e quando pode trabalhar.',
-        'Receba oportunidades compatíveis.',
-        'Demonstre interesse e combine diretamente com o contratante.',
-      ],
-    },
-  ],
-} as const
-
-export const difference = {
-  eyebrow: 'Nosso diferencial',
-  title: 'Menos procura. Mais conexão.',
-  intro:
-    'A Ligana não quer ser só mais um mural de vagas. Em vez de publicar e ficar esperando, a ideia é aproximar as pessoas certas logo de cara.',
-  traditional: {
-    label: 'Do jeito de sempre',
-    steps: ['Publicar', 'Esperar', 'Procurar', 'Filtrar', 'Tentar contratar'],
-  },
-  ligana: {
-    label: 'Do jeito Ligana',
-    steps: ['Informar a necessidade', 'Encontrar quem combina', 'Conectar', 'Combinar'],
-  },
-  criteriaTitle: 'Pra aproximar as pessoas certas, a Ligana vai considerar:',
-  criteria: [
-    'Tipo de trabalho',
-    'Experiência e habilidades',
-    'Localização',
-    'Disponibilidade',
-    'Remuneração',
-    'Urgência',
-  ],
-  support: 'Queremos que a tecnologia faça o trabalho de aproximar as pessoas, sem complicar a vida de ninguém.',
-}
-
-export const categories = {
-  eyebrow: 'Para começar',
-  title: 'Oportunidades do dia a dia da cidade.',
-  intro:
-    'Estas são as áreas que a Ligana quer atender primeiro em Campo Grande. Seu cadastro mostra pra gente onde está a maior necessidade.',
-}
-
-export const signup = {
-  eyebrow: 'Faça parte do começo',
-  title: 'Cadastre seu interesse.',
-  intro:
-    'A Ligana ainda não está funcionando. Estamos montando a lista do piloto em Campo Grande. Escolha seu caminho:',
+  intro: 'Neste começo, a Ligana funciona de forma assistida: nossa equipe acompanha cada pedido de perto.',
   employer: {
-    tab: 'Quero contratar',
-    tabHint: 'Preciso de profissionais',
-    title: 'Quero encontrar profissionais pela Ligana.',
-    subtitle: 'Conte o que você costuma precisar. Assim a gente prepara a Ligana pro seu dia a dia.',
+    title: 'Para empresas',
+    steps: [
+      'Conte o que precisa.',
+      'A Ligana busca profissionais compatíveis.',
+      'Você avalia as indicações e combina as condições do trabalho.',
+    ],
+    cta: 'Preciso de profissionais',
   },
   worker: {
-    tab: 'Quero trabalhar',
-    tabHint: 'Busco oportunidades',
-    title: 'Quero receber oportunidades pela Ligana.',
-    subtitle: 'Conte o que você sabe fazer e quando pode trabalhar. Leva só uns minutinhos.',
+    title: 'Para profissionais',
+    steps: [
+      'Cadastre seu perfil.',
+      'Informe sua experiência e disponibilidade.',
+      'Receba informações sobre oportunidades e escolha se quer participar.',
+    ],
+    cta: 'Quero receber oportunidades',
   },
 }
 
-export const closing = {
-  title: 'Boas oportunidades começam com boas conexões.',
-  text: 'Seja para encontrar alguém para trabalhar ou descobrir uma nova forma de ganhar dinheiro, queremos aproximar você da oportunidade certa.',
-  tagline: 'Quem precisa encontra. Quem trabalha ganha.',
+export type FaqItem = { question: string; answer: string }
+
+export const faq: { title: string; employer: FaqItem[]; worker: FaqItem[] } = {
+  title: 'Perguntas frequentes',
+  employer: [
+    {
+      question: 'Como a Ligana funciona?',
+      answer:
+        'Você conta de quem precisa, quando e em que condições. Nossa equipe procura, entre as pessoas cadastradas, quem tem o perfil e a disponibilidade certos, e te apresenta pelo WhatsApp. Neste começo, tudo é feito com acompanhamento da equipe.',
+    },
+    {
+      question: 'Já existem profissionais disponíveis?',
+      answer:
+        'Estamos formando agora a primeira lista de profissionais em Campo Grande. Por isso, ainda não conseguimos garantir que teremos alguém para todo pedido. Cada solicitação ajuda a gente a saber quem procurar.',
+    },
+    {
+      question: 'Quanto custa utilizar?',
+      answer:
+        'Enviar sua solicitação é gratuito. Ainda estamos definindo se e como a Ligana vai cobrar pela intermediação, e nada será cobrado sem você saber e concordar antes.',
+    },
+    {
+      question: 'Como acontece a contratação?',
+      answer:
+        'Depois da indicação, você conversa com o profissional e vocês combinam diretamente as condições: dia, horário, atividade e pagamento. A Ligana não é a empregadora e não faz pagamentos nesta fase.',
+    },
+    {
+      question: 'A Ligana garante o comparecimento?',
+      answer:
+        'Não. Indicamos pessoas que demonstraram interesse e disponibilidade, mas o compromisso é combinado entre você e o profissional.',
+    },
+  ],
+  worker: [
+    {
+      question: 'Preciso pagar para me cadastrar?',
+      answer: 'Não. O cadastro é gratuito.',
+    },
+    {
+      question: 'O cadastro garante trabalho?',
+      answer:
+        'Não. O cadastro serve para a gente saber o que você sabe fazer e quando pode trabalhar. Quando aparecer algo que combina com você, avisamos.',
+    },
+    {
+      question: 'Como vou receber as oportunidades?',
+      answer:
+        'Pelo WhatsApp que você informar, se você autorizar o contato no formulário. Não mandamos mensagens para quem não autorizou.',
+    },
+    {
+      question: 'Posso escolher quando trabalhar?',
+      answer:
+        'Sim. Você informa seus dias e horários, e cada oportunidade é uma escolha sua. Pode recusar sem problema.',
+    },
+    {
+      question: 'Quem define o pagamento?',
+      answer:
+        'O valor é combinado entre você e a empresa antes do trabalho. Você fica sabendo do pagamento antes de aceitar. A Ligana não paga nem desconta nada nesta fase.',
+    },
+  ],
 }
 
 export const footer = {
   prelaunch:
-    'A Ligana está em pré-lançamento. Ainda não realizamos contratações, não intermediamos pagamentos e não garantimos vagas ou profissionais.',
+    'A Ligana está em pré-lançamento, com operação assistida em Campo Grande — MS. Ainda não garantimos vagas, profissionais, prazos ou comparecimento, não somos empregadora e não intermediamos pagamentos.',
 }

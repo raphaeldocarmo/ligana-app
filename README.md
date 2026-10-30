@@ -2,10 +2,13 @@
 
 **Ligana. Conexões que geram renda.**
 
-Landing page da Ligana para Campo Grande (MS): apresenta a proposta, explica o funcionamento
-planejado e capta interessados dos dois lados — quem precisa contratar e quem quer trabalhar —
-para um piloto. A página **não** simula a plataforma: tudo que descreve o produto aparece como
-experiência planejada.
+Landing page da Ligana para Campo Grande (MS), em pré-lançamento e com operação assistida.
+Objetivo principal: captar **empresas com demandas reais de contratação** (restaurantes,
+hamburguerias e afins, para diárias e trabalhos pontuais). Objetivo secundário: cadastrar
+**profissionais** interessados. A página não simula a plataforma nem promete o que ainda não existe.
+
+Estrutura: Hero (escolha de jornada) → `#quero-contratar` (empresas: benefícios + formulário) →
+`#quero-trabalhar` (profissionais: benefícios + formulário) → Como funciona → Perguntas frequentes → rodapé.
 
 ## Stack
 
@@ -54,8 +57,8 @@ src/
   components/
     brand/                  # símbolo e logo da Ligana (SVG)
     illustrations/          # ilustração do hero
-    sections/               # Header, Hero, Problem, HowItWorks, Difference,
-                            # Categories, Signup, Closing, Footer
+    sections/               # Header, Hero, AudienceSection (empresas/profissionais),
+                            # HowItWorks, Faq, Footer
     forms/                  # EmployerForm, WorkerForm, campos acessíveis, useLeadForm
     analytics/              # Analytics (page view + UTM), CtaLink
     ui/                     # Container, SectionHeading, Icon, estilos de botão
@@ -93,6 +96,12 @@ mudar à vontade, valores não (sem migrar os dados e as restrições da migraç
 5. Reinicie e envie um cadastro de teste. Ele deve aparecer em **Table Editor → employer_leads**
    ou **worker_leads**. Apague o registro de teste depois.
 
+### Atualizando um banco que já existe
+
+Cada mudança de banco fica em `supabase/migrations/`, em ordem de data. Para atualizar um projeto que
+já está no ar, rode no SQL Editor só as migrações que ainda não rodou (todas podem rodar de novo sem
+problema). **Rode a migração antes de publicar a versão do site que depende dela.**
+
 ### Segurança dos leads
 
 - A chave `service_role` só existe no servidor (`src/lib/leads/store.ts` importa `server-only`).
@@ -119,6 +128,12 @@ A migração cria visões agregadas (sem dados pessoais), consultáveis no SQL E
 | `lead_pay_ranges` | Faixas de remuneração oferecidas x esperadas |
 | `lead_campaigns` | Origem dos cadastros por campanha (UTM) |
 | `lead_demand_supply_by_cep_area` | Procura x oferta por faixa de CEP (5 primeiros dígitos) |
+| `lead_demand_supply_by_role` | Procura x oferta por função (garçom, chapeiro…) |
+| `lead_employer_need` | Quando as empresas precisam, quantas pessoas e de que segmento |
+| `lead_willingness_to_pay` | Pesquisa: as empresas pagariam pela intermediação? (por segmento) |
+
+Os campos `urgency` e `pilot_interest` só existem nos cadastros antigos (antes de 31/10/2026); os
+novos usam `need_timing` e não perguntam mais sobre o piloto.
 
 Para contatar pessoas do piloto, filtre sempre por `consent_contact = true`.
 
@@ -138,20 +153,34 @@ Para contatar pessoas do piloto, filtre sempre por `consent_contact = true`.
 Links com `utm_source`, `utm_medium`, `utm_campaign`, `utm_term` e `utm_content` são registrados
 junto do cadastro. Para abrir direto o formulário certo, use as âncoras:
 
-- Contratantes: `https://ligana.com.br/?utm_source=instagram&utm_campaign=piloto#quero-contratar`
-- Profissionais: `https://ligana.com.br/?utm_source=whatsapp&utm_campaign=piloto#quero-trabalhar`
+- Empresas (seção): `https://ligana-app.vercel.app/?utm_source=instagram&utm_campaign=restaurantes#quero-contratar`
+- Empresas (direto no formulário): `…#formulario-empresa`
+- Profissionais (seção): `https://ligana-app.vercel.app/?utm_source=whatsapp&utm_campaign=garcons#quero-trabalhar`
+- Profissionais (direto no formulário): `…#formulario-profissional`
 
 ## Analytics
 
-Eventos disparados (em `window.dataLayer` com prefixo `ligana_`, e no Plausible se ativo):
+Eventos disparados em `window.dataLayer` (Google Tag Manager) e no Plausible, se ativo. Sem nenhuma
+ferramenta configurada, nada sai do navegador (em desenvolvimento, aparecem no console).
 
 | Evento | Quando | Propriedades |
 | --- | --- | --- |
 | `page_view` | Abertura da página | — |
-| `cta_click` | Clique em "Quero contratar" / "Quero trabalhar" | `audience`, `location` |
-| `form_start` | Primeira interação com um formulário | `audience` |
-| `form_submit_success` | Cadastro gravado | `audience` |
-| `form_submit_error` | Falha de validação ou de envio | `audience`, `reason` |
+| `click_hire_cta` | Clique em qualquer CTA de empresa ("Quero contratar profissionais", "Preciso de profissionais", menu) | `location` |
+| `click_work_cta` | Clique em qualquer CTA de profissional | `location` |
+| `start_company_form` | Primeira interação com o formulário de empresas | — |
+| `submit_company_form_success` | Solicitação da empresa gravada no banco | — |
+| `start_worker_form` | Primeira interação com o formulário de profissionais | — |
+| `submit_worker_form_success` | Cadastro do profissional gravado no banco | — |
+| `form_submission_error` | Falha de validação ou de envio | `form` (`company`/`worker`), `reason` |
+
+`location`: `header`, `hero`, `section`, `how_it_works` ou `faq`. `reason`: `validation`,
+`not_configured`, `unavailable`, `network`, `rejected`, `too_many_requests` ou `invalid`.
+
+**Para ativar:** crie um contêiner no Google Tag Manager, defina `NEXT_PUBLIC_GTM_ID=GTM-XXXXXXX` na
+Vercel e, no GTM, crie gatilhos do tipo "Evento personalizado" com os nomes acima (ex.: uma tag de
+conversão do GA4/Meta disparada por `submit_company_form_success`). Ou use o Plausible
+(`NEXT_PUBLIC_PLAUSIBLE_DOMAIN`), que registra os eventos como metas.
 
 Nenhum evento leva nome, WhatsApp, bairro ou respostas. Para ativar, defina `NEXT_PUBLIC_GTM_ID`
 (Google Tag Manager) e/ou `NEXT_PUBLIC_PLAUSIBLE_DOMAIN`. Se usar ferramentas que gravam cookies

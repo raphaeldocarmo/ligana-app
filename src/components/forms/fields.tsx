@@ -145,7 +145,8 @@ export function SelectField({
 type ChoiceGroupProps = BaseProps & {
   name: string
   options: readonly Option[]
-  layout?: 'list' | 'chips'
+  /** list: opções com dica, uma por linha; chips: botões curtos lado a lado; grid: botões em 2 colunas. */
+  layout?: 'list' | 'chips' | 'grid'
 } & (
     | { multiple: true; value: string[]; onValueChange: (value: string[]) => void }
     | { multiple?: false; value: string; onValueChange: (value: string) => void }
@@ -167,8 +168,11 @@ export function ChoiceGroup(props: ChoiceGroupProps) {
     }
   }
 
-  const grid =
-    layout === 'chips' ? 'flex flex-wrap gap-2' : 'grid gap-2 sm:grid-cols-2'
+  const grid = {
+    list: 'grid gap-2 sm:grid-cols-2',
+    chips: 'flex flex-wrap gap-1.5 sm:gap-2',
+    grid: 'grid grid-cols-2 gap-2 sm:grid-cols-3',
+  }[layout]
 
   return (
     <fieldset id={id} aria-describedby={describedBy(id, hint, error)} tabIndex={-1} className="focus:outline-none">
@@ -180,7 +184,7 @@ export function ChoiceGroup(props: ChoiceGroupProps) {
       <Hint id={id}>{hint}</Hint>
       <div className={grid}>
         {options.map((option) => (
-          <label key={option.value} className="block cursor-pointer">
+          <label key={option.value} className="block h-full cursor-pointer">
             <input
               type={props.multiple ? 'checkbox' : 'radio'}
               name={name}
@@ -191,7 +195,7 @@ export function ChoiceGroup(props: ChoiceGroupProps) {
               className="peer sr-only"
             />
             <span
-              className={`flex min-h-12 items-center gap-3 rounded-2xl border-2 bg-surface px-4 py-2.5 transition-colors peer-checked:border-ink peer-checked:bg-green-soft peer-focus-visible:outline-3 peer-focus-visible:outline-offset-2 peer-focus-visible:outline-orange-strong hover:border-ink/50 ${error ? 'border-danger' : 'border-line'} ${layout === 'chips' ? 'justify-center px-5' : ''}`}
+              className={`flex items-center gap-3 rounded-2xl border-2 bg-surface transition-colors peer-checked:border-ink peer-checked:bg-green-soft peer-focus-visible:outline-3 peer-focus-visible:outline-offset-2 peer-focus-visible:outline-orange-strong hover:border-ink/50 ${error ? 'border-danger' : 'border-line'} ${layout === 'list' ? 'min-h-12 px-4 py-2.5' : 'h-full min-h-11 justify-center px-3 py-2 text-center text-[0.97rem]'}`}
             >
               {layout === 'list' && (
                 <span

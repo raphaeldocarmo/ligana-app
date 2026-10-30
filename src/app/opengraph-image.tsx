@@ -3,7 +3,7 @@ import { join } from 'node:path'
 
 import { ImageResponse } from 'next/og'
 
-export const alt = 'Ligana — Conexões que geram renda. Em breve em Campo Grande, MS.'
+export const alt = 'Ligana — Quem precisa de trabalho encontra. Quem precisa de gente também. Começando por Campo Grande, MS.'
 export const size = { width: 1200, height: 630 }
 export const contentType = 'image/png'
 
@@ -40,8 +40,8 @@ export default async function OpengraphImage() {
           <div style={{ fontSize: 96, fontWeight: 800, letterSpacing: -3 }}>Ligana</div>
         </div>
         <div style={{ display: 'flex', flexDirection: 'column' }}>
-          <div style={{ fontSize: 68, fontWeight: 800, lineHeight: 1.1, maxWidth: 980 }}>
-            O trabalho certo encontra a pessoa certa.
+          <div style={{ fontSize: 60, fontWeight: 800, lineHeight: 1.1, maxWidth: 1050 }}>
+            Quem precisa de trabalho encontra. Quem precisa de gente também.
           </div>
           <div style={{ fontSize: 36, marginTop: 24, color: '#167a3e', fontWeight: 700 }}>
             Conexões que geram renda.
@@ -58,7 +58,7 @@ export default async function OpengraphImage() {
               fontWeight: 700,
             }}
           >
-            Em breve em Campo Grande — MS
+            Começando por Campo Grande — MS
           </div>
         </div>
       </div>

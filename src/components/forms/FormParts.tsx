@@ -1,7 +1,7 @@
 'use client'
 
 import Link from 'next/link'
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, type ReactNode } from 'react'
 
 import { ConsentCheckbox } from '@/components/forms/fields'
 import type { Status, SubmitError } from '@/components/forms/useLeadForm'
@@ -38,15 +38,20 @@ export function Consents({ audience, processing, contact, onProcessingChange, on
         onCheckedChange={onProcessingChange}
         error={error}
       >
-        Tenho 18 anos ou mais e concordo que a Ligana use estas respostas para entender a procura em Campo Grande e
-        organizar o piloto, como explica a{' '}
+        Tenho 18 anos ou mais e concordo que a Ligana use estas respostas{' '}
+        {audience === 'employer'
+          ? 'para analisar minha solicitação e buscar profissionais'
+          : 'para me indicar oportunidades de trabalho'}
+        , como explica a{' '}
         <Link href="/privacidade" target="_blank" className="font-bold underline underline-offset-2">
           Política de Privacidade
         </Link>
         .
       </ConsentCheckbox>
       <ConsentCheckbox id={`${audience}-consentContact`} checked={contact} onCheckedChange={onContactChange}>
-        Quero que a Ligana me chame no WhatsApp para contar novidades e me convidar para o piloto.{' '}
+        {audience === 'employer'
+          ? 'Autorizo a Ligana a me chamar no WhatsApp sobre esta solicitação e novidades.'
+          : 'Quero que a Ligana me chame no WhatsApp quando tiver oportunidades e novidades.'}{' '}
         <span className="text-ink-soft">(opcional — dá pra cancelar quando quiser)</span>
       </ConsentCheckbox>
     </div>
@@ -109,7 +114,9 @@ export function SubmitArea({ status, submitError, variant, label }: SubmitProps)
   )
 }
 
-export function SuccessMessage({ contactAllowed }: { contactAllowed: boolean }) {
+type SuccessProps = { title: string; text: string; noContactText: string; contactAllowed: boolean }
+
+export function SuccessMessage({ title, text, noContactText, contactAllowed }: SuccessProps) {
   const headingRef = useRef<HTMLHeadingElement>(null)
   useEffect(() => headingRef.current?.focus(), [])
 
@@ -121,15 +128,25 @@ export function SuccessMessage({ contactAllowed }: { contactAllowed: boolean }) 
         </svg>
       </div>
       <h3 ref={headingRef} tabIndex={-1} className="text-2xl font-black focus:outline-none">
-        Pronto! Seu interesse foi registrado.
+        {title}
       </h3>
-      <p className="mx-auto mt-3 max-w-md text-lg text-ink-soft">
-        A Ligana ainda está chegando.{' '}
-        {contactAllowed
-          ? 'Quando tivermos novidades sobre o piloto, poderemos entrar em contato pelo WhatsApp informado, como você autorizou.'
-          : 'Como você preferiu não receber mensagens, não vamos te chamar no WhatsApp. Fique de olho por aqui!'}
-      </p>
+      <p className="mx-auto mt-3 max-w-md text-lg text-ink-soft">{contactAllowed ? text : noContactText}</p>
       <p className="mt-4 font-bold text-green-text">Obrigado por fazer parte do começo da Ligana.</p>
     </div>
+  )
+}
+
+/** Agrupa os campos em blocos numerados, para o formulário não parecer uma parede de perguntas. */
+export function FormStep({ number, title, children }: { number: number; title: string; children: ReactNode }) {
+  return (
+    <section className="space-y-6 border-t-2 border-line pt-6 first-of-type:border-t-0 first-of-type:pt-0">
+      <h4 className="flex items-center gap-3 text-lg font-black">
+        <span aria-hidden="true" className="grid size-8 shrink-0 place-items-center rounded-full bg-ink text-sm text-white">
+          {number}
+        </span>
+        {title}
+      </h4>
+      {children}
+    </section>
   )
 }

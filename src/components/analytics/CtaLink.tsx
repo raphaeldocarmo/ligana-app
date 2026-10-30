@@ -2,30 +2,41 @@
 
 import type { ReactNode } from 'react'
 
-import { buttonClass } from '@/components/ui/button-styles'
-import { AUDIENCE_ANCHORS, selectAudience } from '@/lib/audience'
-import { track } from '@/lib/analytics'
+import { buttonClass, type ButtonVariant } from '@/components/ui/button-styles'
+import { track, type CtaLocation } from '@/lib/analytics'
+import { AUDIENCE_ANCHORS } from '@/lib/audience'
 import type { Audience } from '@/lib/leads/schema'
 
 type CtaLinkProps = {
   audience: Audience
-  location: 'header' | 'hero' | 'closing'
+  location: CtaLocation
   children: ReactNode
+  /** Âncora de destino. Padrão: a seção do público. */
+  anchor?: string
+  variant?: ButtonVariant
+  size?: 'lg' | 'sm'
+  /** Sem estilo de botão (links do menu): usa só `className`. */
+  plain?: boolean
   className?: string
-  compact?: boolean
 }
 
-/** "Quero contratar" / "Quero trabalhar": leva à jornada de cadastro certa e registra o clique. */
-export function CtaLink({ audience, location, children, className = '', compact = false }: CtaLinkProps) {
-  const style = buttonClass(audience === 'employer' ? 'hire' : 'work', compact ? 'sm' : 'lg')
+/** Botão-âncora de uma jornada: rola até a seção/formulário certo e registra o clique. */
+export function CtaLink({
+  audience,
+  location,
+  children,
+  anchor,
+  variant,
+  size = 'lg',
+  plain = false,
+  className = '',
+}: CtaLinkProps) {
+  const style = plain ? '' : buttonClass(variant ?? (audience === 'employer' ? 'hire' : 'work'), size)
   return (
     <a
-      href={`#${AUDIENCE_ANCHORS[audience]}`}
+      href={`#${anchor ?? AUDIENCE_ANCHORS[audience]}`}
       className={`${style} ${className}`}
-      onClick={() => {
-        track({ name: 'cta_click', audience, location })
-        selectAudience(audience)
-      }}
+      onClick={() => track({ name: audience === 'employer' ? 'click_hire_cta' : 'click_work_cta', location })}
     >
       {children}
     </a>

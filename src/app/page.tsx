@@ -1,12 +1,12 @@
-import { Categories } from '@/components/sections/Categories'
-import { Closing } from '@/components/sections/Closing'
-import { Difference } from '@/components/sections/Difference'
+import { EmployerForm } from '@/components/forms/EmployerForm'
+import { WorkerForm } from '@/components/forms/WorkerForm'
+import { AudienceSection } from '@/components/sections/AudienceSection'
+import { Faq } from '@/components/sections/Faq'
 import { Footer } from '@/components/sections/Footer'
 import { Header } from '@/components/sections/Header'
 import { Hero } from '@/components/sections/Hero'
 import { HowItWorks } from '@/components/sections/HowItWorks'
-import { Problem } from '@/components/sections/Problem'
-import { Signup } from '@/components/sections/Signup'
+import { forCompanies, forWorkers } from '@/content/landing'
 
 export default function HomePage() {
   return (
@@ -14,12 +14,10 @@ export default function HomePage() {
       <Header />
       <main id="conteudo">
         <Hero />
-        <Problem />
+        <AudienceSection audience="employer" content={forCompanies} form={<EmployerForm />} />
+        <AudienceSection audience="worker" content={forWorkers} form={<WorkerForm />} />
         <HowItWorks />
-        <Difference />
-        <Categories />
-        <Signup />
-        <Closing />
+        <Faq />
       </main>
       <Footer />
     </>
