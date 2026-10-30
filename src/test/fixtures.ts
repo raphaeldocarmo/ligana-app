@@ -3,6 +3,7 @@ export const validEmployer = {
   name: '  Ana Souza ',
   companyName: '',
   whatsapp: '(67) 99999-8888',
+  cep: '79002-000',
   region: 'centro',
   neighborhood: '',
   categories: ['kitchen', 'events', 'kitchen'],

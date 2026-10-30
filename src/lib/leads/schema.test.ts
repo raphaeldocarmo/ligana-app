@@ -11,6 +11,7 @@ describe('leadSchema', () => {
       name: 'Ana Souza',
       companyName: null,
       whatsapp: '+5567999998888',
+      cep: '79002000',
       categories: ['kitchen', 'events'],
       payRange: null,
       consentContact: false,
@@ -23,6 +24,7 @@ describe('leadSchema', () => {
     expect(lead).toMatchObject({
       audience: 'worker',
       whatsapp: '+556733334444',
+      cep: null,
       neighborhood: 'Mata do Jacinto',
       rolesDetail: null,
       experience: '1_3y',
@@ -74,5 +76,12 @@ describe('leadSchema', () => {
 
   it('não aceita público desconhecido', () => {
     expect(leadSchema.safeParse({ ...validEmployer, audience: 'admin' }).success).toBe(false)
+  })
+
+  it('aceita CEP vazio e recusa CEP incompleto', () => {
+    expect(leadSchema.parse({ ...validEmployer, cep: '' })).toMatchObject({ cep: null })
+    const result = leadSchema.safeParse({ ...validEmployer, cep: '7900' })
+    expect(result.success).toBe(false)
+    if (!result.success) expect(toFieldErrors(result.error).cep).toContain('8 números')
   })
 })

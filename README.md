@@ -118,8 +118,20 @@ A migração cria visões agregadas (sem dados pessoais), consultáveis no SQL E
 | `lead_engagement_types` | Tipos de vínculo desejados (freela, temporário, fixo) |
 | `lead_pay_ranges` | Faixas de remuneração oferecidas x esperadas |
 | `lead_campaigns` | Origem dos cadastros por campanha (UTM) |
+| `lead_demand_supply_by_cep_area` | Procura x oferta por faixa de CEP (5 primeiros dígitos) |
 
 Para contatar pessoas do piloto, filtre sempre por `consent_contact = true`.
+
+## CEP, bairro e região
+
+- O CEP é opcional. Ao digitar os 8 números, o navegador consulta o
+  [ViaCEP](https://viacep.com.br) (gratuito, sem chave) e preenche o bairro. CEP de outra cidade
+  marca a região como "Fora de Campo Grande". Se a busca falhar, a pessoa preenche à mão.
+- Só o que foi preenchido automaticamente é trocado numa nova busca; o que a pessoa digitou fica.
+- O CEP é gravado (8 dígitos). A região continua sendo escolhida/conferida pela pessoa.
+- **Sugestões de bairro e região automática:** preencha `src/content/neighborhoods.ts` com os
+  bairros oficiais (Planurb) e suas regiões. Enquanto a lista estiver vazia, o bairro é texto
+  livre e a região é escolhida à mão.
 
 ## Campanhas (UTM) e links diretos
 

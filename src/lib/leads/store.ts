@@ -41,6 +41,7 @@ function commonColumns(lead: Lead, consentAt: string) {
   return {
     name: lead.name,
     whatsapp: lead.whatsapp,
+    cep: lead.cep,
     region: lead.region,
     neighborhood: lead.neighborhood,
     categories: lead.categories,

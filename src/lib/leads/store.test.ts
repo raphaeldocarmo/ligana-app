@@ -10,6 +10,7 @@ describe('mapeamento para as tabelas', () => {
     expect(row).toMatchObject({
       name: 'Ana Souza',
       whatsapp: '+5567999998888',
+      cep: '79002000',
       company_name: null,
       frequency: 'weekly',
       urgency: 'same_day',

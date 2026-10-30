@@ -91,7 +91,7 @@ export default function PrivacyPage() {
             <p>Pelo formulário, só o que você mesmo informa:</p>
             <ul>
               <li>Nome e WhatsApp;</li>
-              <li>Região e, se quiser, bairro de Campo Grande;</li>
+              <li>Região de Campo Grande e, se quiser, CEP e bairro;</li>
               <li>Nome da empresa ou negócio (opcional, só para quem contrata);</li>
               <li>
                 Tipos de trabalho, tipo de contratação, frequência, urgência, disponibilidade, experiência e
@@ -104,6 +104,11 @@ export default function PrivacyPage() {
               pelo qual você chegou e o site de origem (apenas o domínio).
             </p>
             <p>
+              Se você informar o CEP, ele é consultado no ViaCEP (serviço público de consulta de endereços)
+              direto do seu navegador, só para preencher o bairro. Guardamos o CEP, mas não pedimos rua nem
+              número.
+            </p>
+            <p>
               <strong>Não pedimos</strong> CPF, RG, documentos, foto, dados bancários, senha ou qualquer dado
               sensível. Por favor, não escreva esse tipo de informação nos campos livres.
             </p>
@@ -112,6 +117,7 @@ export default function PrivacyPage() {
           <Section title="4. Para que usamos">
             <ul>
               <li>Entender quantas pessoas e empresas têm interesse, em quais áreas e regiões da cidade;</li>
+              <li>No piloto, aproximar pessoas e oportunidades que estejam perto uma da outra (pelo CEP ou bairro);</li>
               <li>Planejar e organizar o piloto da Ligana em Campo Grande;</li>
               <li>
                 Falar com você pelo WhatsApp sobre novidades e o piloto, <strong>somente se você autorizar</strong>{' '}

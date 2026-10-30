@@ -2,6 +2,7 @@
 
 import { ChoiceGroup, SelectField, TextField } from '@/components/forms/fields'
 import { Consents, Honeypot, SubmitArea, SuccessMessage } from '@/components/forms/FormParts'
+import { LocationFields } from '@/components/forms/LocationFields'
 import { useLeadForm } from '@/components/forms/useLeadForm'
 import {
   CATEGORIES,
@@ -9,7 +10,6 @@ import {
   FREQUENCIES,
   PAY_RANGE_GROUPS,
   PILOT_INTEREST,
-  REGIONS,
   URGENCIES,
 } from '@/content/options'
 import { formatPhoneInput } from '@/lib/phone'
@@ -18,6 +18,7 @@ const initialValues = {
   name: '',
   companyName: '',
   whatsapp: '',
+  cep: '',
   region: '',
   neighborhood: '',
   categories: [] as string[],
@@ -70,27 +71,17 @@ export function EmployerForm() {
         onValueChange={(value) => setValue('whatsapp', formatPhoneInput(value))}
         error={errors.whatsapp}
       />
-      <div className="grid gap-6 sm:grid-cols-2">
-        <SelectField
-          id={fieldId('region')}
-          name="region"
-          label="Região da cidade"
-          placeholder="Escolha a região"
-          options={REGIONS}
-          value={values.region}
-          onValueChange={(value) => setValue('region', value)}
-          error={errors.region}
-        />
-        <TextField
-          id={fieldId('neighborhood')}
-          label="Bairro"
-          optional
-          autoComplete="off"
-          value={values.neighborhood}
-          onValueChange={(value) => setValue('neighborhood', value)}
-          error={errors.neighborhood}
-        />
-      </div>
+      <LocationFields
+        idFor={fieldId}
+        cep={values.cep}
+        region={values.region}
+        neighborhood={values.neighborhood}
+        onCepChange={(value) => setValue('cep', value)}
+        onRegionChange={(value) => setValue('region', value)}
+        onNeighborhoodChange={(value) => setValue('neighborhood', value)}
+        errors={errors}
+        regionLabel="Região da cidade"
+      />
 
       <ChoiceGroup
         id={fieldId('categories')}

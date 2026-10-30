@@ -13,7 +13,8 @@ import {
   WEEKDAYS,
   values,
 } from '@/content/options'
-import { normalizeBrazilianPhone } from '@/lib/phone'
+import { normalizeCep } from '@/lib/cep'
+import { digitsOnly, normalizeBrazilianPhone } from '@/lib/phone'
 
 /**
  * Validação única dos formulários, usada no navegador (feedback imediato) e no
@@ -36,6 +37,19 @@ const whatsapp = z
     const normalized = normalizeBrazilianPhone(value)
     if (!normalized) {
       ctx.addIssue({ code: 'custom', message: 'Confira o número. Ex.: (67) 99999-8888.' })
+      return z.NEVER
+    }
+    return normalized
+  })
+
+const cep = z
+  .string()
+  .optional()
+  .transform((value, ctx) => {
+    if (!value || digitsOnly(value) === '') return null
+    const normalized = normalizeCep(value)
+    if (!normalized) {
+      ctx.addIssue({ code: 'custom', message: 'O CEP tem 8 números. Ex.: 79002-000.' })
       return z.NEVER
     }
     return normalized
@@ -81,6 +95,7 @@ const tracking = z
 const common = {
   name,
   whatsapp,
+  cep,
   region: oneOf(REGIONS),
   neighborhood: optionalText(80),
   categories: someOf(CATEGORIES),
