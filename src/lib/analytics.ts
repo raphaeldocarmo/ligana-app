@@ -17,7 +17,7 @@ export type AnalyticsEvent =
   | { name: 'click_hire_cta'; location: CtaLocation }
   | { name: 'click_work_cta'; location: CtaLocation }
   | { name: 'start_company_form' }
-  | { name: 'submit_company_form_success' }
+  | { name: 'submit_company_form_success'; need_timing: string }
   | { name: 'start_worker_form' }
   | { name: 'submit_worker_form_success' }
   | { name: 'form_submission_error'; form: 'company' | 'worker'; reason: string }

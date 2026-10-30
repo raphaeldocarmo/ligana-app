@@ -19,6 +19,9 @@ export function Header() {
             <span className="md:hidden">{nav.employerShort}</span>
             <span className="hidden md:inline">{nav.employer}</span>
           </CtaLink>
+          <a href="#matching" className={`${linkClass} hidden lg:inline`}>
+            {nav.matching}
+          </a>
           <CtaLink audience="worker" location="header" plain className={linkClass}>
             <span className="md:hidden">{nav.workerShort}</span>
             <span className="hidden md:inline">{nav.worker}</span>

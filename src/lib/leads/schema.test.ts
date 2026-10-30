@@ -89,21 +89,45 @@ describe('leadSchema', () => {
     if (!result.success) expect(toFieldErrors(result.error).cep).toContain('8 números')
   })
 
-  it('empresa precisa informar estabelecimento, segmento, função, quantidade e a pesquisa de pagamento', () => {
+  it('empresa precisa dos campos essenciais', () => {
     const result = leadSchema.safeParse({
       ...validEmployer,
       companyName: ' ',
       segment: '',
       roles: [],
-      headcount: undefined,
-      willingnessToPay: undefined,
+      frequency: undefined,
+      needTiming: undefined,
     })
     expect(result.success).toBe(false)
     if (!result.success) {
       expect(Object.keys(toFieldErrors(result.error)).sort()).toEqual(
-        ['companyName', 'headcount', 'roles', 'segment', 'willingnessToPay'].sort(),
+        ['companyName', 'frequency', 'needTiming', 'roles', 'segment'].sort(),
       )
     }
+  })
+
+  it('campos complementares da empresa são opcionais', () => {
+    const lead = leadSchema.parse({
+      ...validEmployer,
+      headcount: '',
+      payRange: '',
+      mainDifficulty: '',
+      currentSourcing: undefined,
+      willingnessToPay: '',
+    })
+    expect(lead).toMatchObject({
+      headcount: null,
+      payRange: null,
+      mainDifficulty: null,
+      currentSourcing: [],
+      willingnessToPay: null,
+    })
+  })
+
+  it('recusa opções inventadas nos campos complementares', () => {
+    const result = leadSchema.safeParse({ ...validEmployer, mainDifficulty: 'x', currentSourcing: ['spam'] })
+    expect(result.success).toBe(false)
+    if (!result.success) expect(Object.keys(toFieldErrors(result.error)).sort()).toEqual(['currentSourcing', 'mainDifficulty'])
   })
 
   it('profissional pode deixar as funções em branco', () => {

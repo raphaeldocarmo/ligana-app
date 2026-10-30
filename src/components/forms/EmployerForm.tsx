@@ -6,9 +6,11 @@ import { LocationFields } from '@/components/forms/LocationFields'
 import { useLeadForm } from '@/components/forms/useLeadForm'
 import { forCompanies } from '@/content/landing'
 import {
+  CURRENT_SOURCING,
   ENGAGEMENT_TYPES,
   FREQUENCIES,
   HEADCOUNTS,
+  MAIN_DIFFICULTIES,
   NEED_TIMINGS,
   ROLES,
   SEGMENTS,
@@ -32,6 +34,8 @@ const initialValues = {
   needTiming: '',
   frequency: '',
   payRange: '',
+  mainDifficulty: '',
+  currentSourcing: [] as string[],
   willingnessToPay: '',
   consentProcessing: false,
   consentContact: false,
@@ -122,11 +126,11 @@ export function EmployerForm() {
         />
       </FormStep>
 
-      <FormStep number={2} title="De quem você precisa">
+      <FormStep number={2} title="Do que você precisa">
         <ChoiceGroup
           id={fieldId('roles')}
           name="employer-roles"
-          label="Função desejada"
+          label="Que profissional você costuma precisar?"
           multiple
           layout="grid"
           options={ROLES}
@@ -149,65 +153,85 @@ export function EmployerForm() {
           />
         )}
         <ChoiceGroup
-          id={fieldId('headcount')}
-          name="employer-headcount"
-          label="Quantos profissionais?"
-          layout="chips"
-          options={HEADCOUNTS}
-          value={values.headcount}
-          onValueChange={(value) => setValue('headcount', value)}
-          error={errors.headcount}
-        />
-        <ChoiceGroup
           id={fieldId('engagementTypes')}
           name="employer-engagementTypes"
-          label="Tipo de contratação"
+          label="Tipo de trabalho"
           multiple
           options={ENGAGEMENT_TYPES}
           value={values.engagementTypes}
           onValueChange={onEngagementChange}
           error={errors.engagementTypes}
         />
+        <SelectField
+          id={fieldId('frequency')}
+          name="frequency"
+          label="Com que frequência você precisa de alguém?"
+          placeholder="Escolha uma opção"
+          options={FREQUENCIES}
+          value={values.frequency}
+          onValueChange={(value) => setValue('frequency', value)}
+          error={errors.frequency}
+        />
         <ChoiceGroup
           id={fieldId('needTiming')}
           name="employer-needTiming"
-          label="Quando você precisa?"
+          label="Qual a urgência hoje?"
           layout="grid"
           options={NEED_TIMINGS}
           value={values.needTiming}
           onValueChange={(value) => setValue('needTiming', value)}
           error={errors.needTiming}
         />
+      </FormStep>
+
+      <FormStep number={3} title="Para conhecer melhor seu negócio" optional>
+        <ChoiceGroup
+          id={fieldId('headcount')}
+          name="employer-headcount"
+          label="Quantos profissionais você costuma precisar?"
+          layout="chips"
+          options={HEADCOUNTS}
+          value={values.headcount}
+          onValueChange={(value) => setValue('headcount', value)}
+          error={errors.headcount}
+        />
         <div className="grid gap-6 sm:grid-cols-2">
-          <SelectField
-            id={fieldId('frequency')}
-            name="frequency"
-            label="Com que frequência costuma precisar?"
-            placeholder="Escolha uma opção"
-            options={FREQUENCIES}
-            value={values.frequency}
-            onValueChange={(value) => setValue('frequency', value)}
-            error={errors.frequency}
-          />
           <SelectField
             id={fieldId('payRange')}
             name="payRange"
-            label="Quanto pretende pagar?"
-            optional
-            placeholder="Prefiro não informar"
+            label="Quanto costuma pagar?"
+              placeholder="Prefiro não informar"
             groups={payGroups}
             value={values.payRange}
             onValueChange={(value) => setValue('payRange', value)}
             error={errors.payRange}
           />
+          <SelectField
+            id={fieldId('mainDifficulty')}
+            name="mainDifficulty"
+            label="Maior dificuldade para encontrar gente"
+              placeholder="Prefiro não informar"
+            options={MAIN_DIFFICULTIES}
+            value={values.mainDifficulty}
+            onValueChange={(value) => setValue('mainDifficulty', value)}
+            error={errors.mainDifficulty}
+          />
         </div>
-      </FormStep>
-
-      <FormStep number={3} title="Pesquisa rápida">
+        <ChoiceGroup
+          id={fieldId('currentSourcing')}
+          name="employer-currentSourcing"
+          label="Como você encontra profissionais hoje?"
+          multiple
+          layout="grid"
+          options={CURRENT_SOURCING}
+          value={values.currentSourcing}
+          onValueChange={(value) => setValue('currentSourcing', value)}
+          error={errors.currentSourcing}
+        />
         <ChoiceGroup
           id={fieldId('willingnessToPay')}
           name="employer-willingnessToPay"
-          label="Você pagaria para a Ligana encontrar profissionais para você?"
+          label="Você pagaria por uma intermediação que desse certo?"
           hint="Ainda não existe nenhuma cobrança. Sua resposta só ajuda a gente a decidir como a Ligana vai funcionar."
           layout="chips"
           options={WILLINGNESS_TO_PAY}

@@ -2,10 +2,12 @@ import { z } from 'zod'
 
 import {
   CATEGORIES,
+  CURRENT_SOURCING,
   ENGAGEMENT_TYPES,
   EXPERIENCE,
   FREQUENCIES,
   HEADCOUNTS,
+  MAIN_DIFFICULTIES,
   NEED_TIMINGS,
   PAY_RANGES,
   PERIODS,
@@ -129,10 +131,13 @@ export const employerLeadSchema = z.object({
     .max(120, { error: 'Use no máximo 120 caracteres.' }),
   segment: oneOf(SEGMENTS),
   roles: someOf(ROLES),
-  headcount: oneOf(HEADCOUNTS),
-  needTiming: oneOf(NEED_TIMINGS),
   frequency: oneOf(FREQUENCIES),
-  willingnessToPay: oneOf(WILLINGNESS_TO_PAY),
+  needTiming: oneOf(NEED_TIMINGS),
+  // Complementares (opcionais): ajudam a qualificar o lead sem travar o envio.
+  headcount: optionalOneOf(HEADCOUNTS),
+  mainDifficulty: optionalOneOf(MAIN_DIFFICULTIES),
+  currentSourcing: optionalSomeOf(CURRENT_SOURCING),
+  willingnessToPay: optionalOneOf(WILLINGNESS_TO_PAY),
 })
 
 export const workerLeadSchema = z.object({

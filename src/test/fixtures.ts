@@ -14,6 +14,8 @@ export const validEmployer = {
   needTiming: 'next_7_days',
   frequency: 'weekly',
   payRange: '',
+  mainDifficulty: 'short_notice',
+  currentSourcing: ['whatsapp_groups', 'referrals'],
   willingnessToPay: 'depends',
   consentProcessing: true,
   consentContact: false,

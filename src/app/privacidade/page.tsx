@@ -81,10 +81,10 @@ export default function PrivacyPage() {
 
           <Section title="2. Em que fase a Ligana está">
             <p>
-              A Ligana está em <strong>pré-lançamento</strong>, com uma operação assistida: nossa equipe recebe
-              os pedidos das empresas e procura, entre as pessoas cadastradas, quem tem o perfil certo. Não somos
-              empregadora, não intermediamos pagamentos e não garantimos vagas, renda, profissionais, prazos ou
-              comparecimento. A contratação é combinada diretamente entre a empresa e o profissional.
+              A Ligana está em <strong>pré-lançamento</strong>: a plataforma e o sistema de recomendação por
+              compatibilidade ainda estão em desenvolvimento. Nesta fase, só cadastramos o interesse de empresas e
+              profissionais. Não divulgamos vagas, não fazemos indicações nem contratações, não somos empregadora,
+              não intermediamos pagamentos e não garantimos trabalho, profissionais ou prazos.
             </p>
           </Section>
 
@@ -94,9 +94,9 @@ export default function PrivacyPage() {
               <li>Nome e WhatsApp;</li>
               <li>Região de Campo Grande e, se quiser, CEP e bairro;</li>
               <li>
-                Para empresas: nome do estabelecimento, segmento, funções procuradas, quantidade de pessoas, tipo
-                de contratação, quando e com que frequência precisa, faixa de pagamento prevista (opcional) e sua
-                opinião sobre pagar pela intermediação;
+                Para empresas: nome do estabelecimento, segmento, funções procuradas, tipo de trabalho, frequência
+                e urgência e, se quiser, quantidade habitual, faixa de pagamento, principal dificuldade, como
+                encontra profissionais hoje e sua opinião sobre pagar pela intermediação;
               </li>
               <li>
                 Para profissionais: áreas e funções, experiência (opcional), dias, turnos e regiões em que pode
@@ -123,12 +123,17 @@ export default function PrivacyPage() {
             <ul>
               <li>Entender quantas pessoas e empresas têm interesse, em quais áreas e regiões da cidade;</li>
               <li>
-                Analisar os pedidos das empresas e indicar profissionais compatíveis (função, disponibilidade,
-                região e expectativa de pagamento), aproximando quem está perto pelo CEP ou bairro;
+                Entender as necessidades das empresas (funções, frequência, urgência, como contratam hoje e
+                principais dificuldades) e o perfil dos profissionais (funções, disponibilidade e regiões);
+              </li>
+              <li>
+                Preparar e testar o sistema de recomendação por compatibilidade, que vai considerar função,
+                experiência, disponibilidade, localização (CEP ou bairro) e remuneração;
               </li>
               <li>Entender se as empresas veem valor em pagar pela intermediação, para definir o modelo da Ligana;</li>
+              <li>Convidar empresas e profissionais para a primeira fase da Ligana;</li>
               <li>
-                Falar com você pelo WhatsApp sobre sua solicitação, oportunidades e novidades,{' '}
+                Falar com você pelo WhatsApp sobre seu cadastro, novidades e a primeira fase da Ligana,{' '}
                 <strong>somente se você autorizar</strong>{' '}
                 marcando a caixa específica no formulário.
               </li>

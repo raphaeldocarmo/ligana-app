@@ -2,8 +2,8 @@ import { CtaLink } from '@/components/analytics/CtaLink'
 import { HeroIllustration } from '@/components/illustrations/HeroIllustration'
 import { Container } from '@/components/ui/Container'
 import { Icon } from '@/components/ui/Icon'
-import { siteConfig } from '@/config/site'
 import { hero } from '@/content/landing'
+import { FORM_ANCHORS } from '@/lib/audience'
 
 export function Hero() {
   return (
@@ -18,21 +18,19 @@ export function Hero() {
             id="hero-title"
             className="text-[2.3rem] leading-[1.08] font-black tracking-tight text-balance sm:text-5xl lg:text-[3.4rem]"
           >
-            Quem precisa de trabalho encontra. <span className="text-orange-text">Quem precisa de gente também.</span>
+            A pessoa certa. <span className="text-orange-text">Na hora que você precisa.</span>
           </h1>
           <p className="mt-5 max-w-xl text-lg text-pretty text-ink-soft sm:text-xl">{hero.subtitle}</p>
           <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:[&>a]:whitespace-nowrap">
-            <CtaLink audience="employer" location="hero">
+            <CtaLink audience="employer" location="hero" anchor={FORM_ANCHORS.employer}>
               {hero.ctaHire}
               <Icon name="arrowRight" className="hidden size-5 shrink-0 min-[400px]:block" />
             </CtaLink>
-            <CtaLink audience="worker" location="hero" variant="work-outline">
+            <CtaLink audience="worker" location="hero" anchor={FORM_ANCHORS.worker} variant="work-outline">
               {hero.ctaWork}
             </CtaLink>
           </div>
-          <p className="mt-4 text-[0.95rem] text-ink-soft">
-            {hero.note} <span className="font-bold text-green-text">Ligana. {siteConfig.slogan}</span>
-          </p>
+          <p className="mt-4 text-[0.95rem] font-semibold text-ink-soft">{hero.note}</p>
         </div>
         <HeroIllustration className="mx-auto w-full max-w-sm sm:max-w-md lg:max-w-none" />
       </Container>

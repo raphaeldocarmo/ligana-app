@@ -2,13 +2,19 @@
 
 **Ligana. Conexões que geram renda.**
 
-Landing page da Ligana para Campo Grande (MS), em pré-lançamento e com operação assistida.
-Objetivo principal: captar **empresas com demandas reais de contratação** (restaurantes,
-hamburguerias e afins, para diárias e trabalhos pontuais). Objetivo secundário: cadastrar
-**profissionais** interessados. A página não simula a plataforma nem promete o que ainda não existe.
+Landing page de **pré-lançamento** da Ligana em Campo Grande (MS). A Ligana está sendo construída para
+conectar empresas e profissionais **por compatibilidade** (função, experiência, disponibilidade,
+localização e remuneração). O motor de matching **ainda não existe**: a página apresenta a proposta,
+mostra um exemplo ilustrativo e capta leads qualificados para o lançamento.
 
-Estrutura: Hero (escolha de jornada) → `#quero-contratar` (empresas: benefícios + formulário) →
-`#quero-trabalhar` (profissionais: benefícios + formulário) → Como funciona → Perguntas frequentes → rodapé.
+- Conversão primária: **empresas** com dificuldade de encontrar profissionais (acesso antecipado).
+- Conversão secundária: **profissionais**, para formar a base inicial de oferta.
+
+Estrutura: Hero → `#quero-contratar` (empresas) → `#matching` (exemplo ilustrativo do matching) →
+`#quero-trabalhar` (profissionais) → `#como-funciona` → `#perguntas` → rodapé.
+
+Regra de comunicação (ver `src/content/landing.ts`): tudo no futuro ("estamos criando", "a Ligana
+vai"); nada de vagas reais, garantias, contadores, depoimentos, percentuais ou datas não confirmadas.
 
 ## Stack
 
@@ -58,7 +64,7 @@ src/
     brand/                  # símbolo e logo da Ligana (SVG)
     illustrations/          # ilustração do hero
     sections/               # Header, Hero, AudienceSection (empresas/profissionais),
-                            # HowItWorks, Faq, Footer
+                            # MatchingDemo, HowItWorks, Faq, Footer
     forms/                  # EmployerForm, WorkerForm, campos acessíveis, useLeadForm
     analytics/              # Analytics (page view + UTM), CtaLink
     ui/                     # Container, SectionHeading, Icon, estilos de botão
@@ -131,6 +137,20 @@ A migração cria visões agregadas (sem dados pessoais), consultáveis no SQL E
 | `lead_demand_supply_by_role` | Procura x oferta por função (garçom, chapeiro…) |
 | `lead_employer_need` | Quando as empresas precisam, quantas pessoas e de que segmento |
 | `lead_willingness_to_pay` | Pesquisa: as empresas pagariam pela intermediação? (por segmento) |
+| `lead_employer_pain` | Principal dificuldade x como as empresas encontram profissionais hoje |
+| `lead_workers_by_role_region` | Profissionais por função e por região em que aceitam trabalhar |
+
+**Indicadores do pré-lançamento:**
+
+| Indicador | Onde ver |
+| --- | --- |
+| Visitantes únicos | Ferramenta de analytics (`page_view`) |
+| Cliques nos CTAs | `click_hire_cta` / `click_work_cta` (por `location`) |
+| Início e conclusão dos formulários | `start_*_form` e `submit_*_form_success` |
+| Taxa de conversão por público | `submit_company_form_success ÷ visitantes` e o mesmo para profissionais |
+| Origem dos leads | Colunas `utm_*` nas tabelas e visão `lead_campaigns` |
+| Empresas com demanda imediata | `need_timing = 'today_tomorrow'` (visão `lead_employer_need`) e a propriedade `need_timing` do evento de conversão |
+| Profissionais por função e região | Visão `lead_workers_by_role_region` |
 
 Os campos `urgency` e `pilot_interest` só existem nos cadastros antigos (antes de 31/10/2026); os
 novos usam `need_timing` e não perguntam mais sobre o piloto.
@@ -169,7 +189,7 @@ ferramenta configurada, nada sai do navegador (em desenvolvimento, aparecem no c
 | `click_hire_cta` | Clique em qualquer CTA de empresa ("Quero contratar profissionais", "Preciso de profissionais", menu) | `location` |
 | `click_work_cta` | Clique em qualquer CTA de profissional | `location` |
 | `start_company_form` | Primeira interação com o formulário de empresas | — |
-| `submit_company_form_success` | Solicitação da empresa gravada no banco | — |
+| `submit_company_form_success` | Cadastro da empresa gravado no banco | `need_timing` (urgência, sem dado pessoal) |
 | `start_worker_form` | Primeira interação com o formulário de profissionais | — |
 | `submit_worker_form_success` | Cadastro do profissional gravado no banco | — |
 | `form_submission_error` | Falha de validação ou de envio | `form` (`company`/`worker`), `reason` |

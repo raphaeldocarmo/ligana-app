@@ -40,8 +40,8 @@ export function Consents({ audience, processing, contact, onProcessingChange, on
       >
         Tenho 18 anos ou mais e concordo que a Ligana use estas respostas{' '}
         {audience === 'employer'
-          ? 'para analisar minha solicitação e buscar profissionais'
-          : 'para me indicar oportunidades de trabalho'}
+          ? 'para entender minhas necessidades e preparar o lançamento'
+          : 'para formar a lista de profissionais e preparar o lançamento'}
         , como explica a{' '}
         <Link href="/privacidade" target="_blank" className="font-bold underline underline-offset-2">
           Política de Privacidade
@@ -50,8 +50,8 @@ export function Consents({ audience, processing, contact, onProcessingChange, on
       </ConsentCheckbox>
       <ConsentCheckbox id={`${audience}-consentContact`} checked={contact} onCheckedChange={onContactChange}>
         {audience === 'employer'
-          ? 'Autorizo a Ligana a me chamar no WhatsApp sobre esta solicitação e novidades.'
-          : 'Quero que a Ligana me chame no WhatsApp quando tiver oportunidades e novidades.'}{' '}
+          ? 'Autorizo a Ligana a me chamar no WhatsApp para conhecer minhas necessidades e me convidar para a primeira fase.'
+          : 'Quero que a Ligana me chame no WhatsApp com novidades e convites para a primeira fase.'}{' '}
         <span className="text-ink-soft">(opcional — dá pra cancelar quando quiser)</span>
       </ConsentCheckbox>
     </div>
@@ -137,15 +137,25 @@ export function SuccessMessage({ title, text, noContactText, contactAllowed }: S
 }
 
 /** Agrupa os campos em blocos numerados, para o formulário não parecer uma parede de perguntas. */
-export function FormStep({ number, title, children }: { number: number; title: string; children: ReactNode }) {
+type FormStepProps = { number: number; title: string; optional?: boolean; children: ReactNode }
+
+export function FormStep({ number, title, optional = false, children }: FormStepProps) {
   return (
     <section className="space-y-6 border-t-2 border-line pt-6 first-of-type:border-t-0 first-of-type:pt-0">
       <h4 className="flex items-center gap-3 text-lg font-black">
         <span aria-hidden="true" className="grid size-8 shrink-0 place-items-center rounded-full bg-ink text-sm text-white">
           {number}
         </span>
-        {title}
+        <span>
+          {title}
+          {optional && <span className="ml-1.5 text-base font-semibold text-ink-soft">(opcional)</span>}
+        </span>
       </h4>
+      {optional && (
+        <p className="-mt-3 text-[0.95rem] text-ink-soft">
+          Se puder, responda: leva uns 30 segundos e ajuda muito a gente a construir a Ligana.
+        </p>
+      )}
       {children}
     </section>
   )

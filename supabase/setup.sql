@@ -308,3 +308,39 @@ grant select on public.lead_demand_supply_by_role, public.lead_employer_need, pu
   to service_role;
 
 notify pgrst, 'reload schema';
+
+-- ---------------------------------------------------------------------------
+-- Qualificação de leads (adicionado em 2026-11-01)
+-- ---------------------------------------------------------------------------
+alter table public.employer_leads add column if not exists main_difficulty text check (main_difficulty in (
+  'takes_too_long','short_notice','no_shows','lack_experience','availability','cost','other'
+));
+alter table public.employer_leads add column if not exists current_sourcing text[] check (current_sourcing <@ array[
+  'whatsapp_groups','referrals','social_media','job_sites','agency','own_contacts','other'
+]);
+
+-- Profissionais por função e por região em que aceitam trabalhar ('any' = qualquer região).
+create or replace view public.lead_workers_by_role_region with (security_invoker = true) as
+select coalesce(r.role, '(sem função marcada)') as role,
+       coalesce(w.work_region, '(não informado)') as work_region,
+       count(*) as workers
+from public.worker_leads l
+left join lateral unnest(l.roles) as r(role) on true
+left join lateral unnest(l.work_regions) as w(work_region) on true
+group by 1, 2
+order by workers desc;
+
+-- Como as empresas resolvem hoje e qual a principal dificuldade (para pesquisa de mercado).
+create or replace view public.lead_employer_pain with (security_invoker = true) as
+select coalesce(main_difficulty, '(não informado)') as main_difficulty,
+       coalesce(s.sourcing, '(não informado)') as current_sourcing,
+       count(*) as employers
+from public.employer_leads l
+left join lateral unnest(l.current_sourcing) as s(sourcing) on true
+group by 1, 2
+order by employers desc;
+
+revoke all on public.lead_workers_by_role_region, public.lead_employer_pain from anon, authenticated;
+grant select on public.lead_workers_by_role_region, public.lead_employer_pain to service_role;
+
+notify pgrst, 'reload schema';

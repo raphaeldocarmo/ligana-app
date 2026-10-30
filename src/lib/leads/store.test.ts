@@ -18,6 +18,8 @@ describe('mapeamento para as tabelas', () => {
       headcount: '2_3',
       need_timing: 'next_7_days',
       frequency: 'weekly',
+      main_difficulty: 'short_notice',
+      current_sourcing: ['whatsapp_groups', 'referrals'],
       willingness_to_pay: 'depends',
       consent_processing: true,
       consent_at: '2026-10-27T12:00:00.000Z',

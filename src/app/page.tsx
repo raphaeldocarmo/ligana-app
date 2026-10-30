@@ -6,6 +6,7 @@ import { Footer } from '@/components/sections/Footer'
 import { Header } from '@/components/sections/Header'
 import { Hero } from '@/components/sections/Hero'
 import { HowItWorks } from '@/components/sections/HowItWorks'
+import { MatchingDemo } from '@/components/sections/MatchingDemo'
 import { forCompanies, forWorkers } from '@/content/landing'
 
 export default function HomePage() {
@@ -15,6 +16,7 @@ export default function HomePage() {
       <main id="conteudo">
         <Hero />
         <AudienceSection audience="employer" content={forCompanies} form={<EmployerForm />} />
+        <MatchingDemo />
         <AudienceSection audience="worker" content={forWorkers} form={<WorkerForm />} />
         <HowItWorks />
         <Faq />

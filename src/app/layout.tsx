@@ -3,15 +3,14 @@ import type { ReactNode } from 'react'
 
 import { Analytics } from '@/components/analytics/Analytics'
 import { siteConfig } from '@/config/site'
-import { hero } from '@/content/landing'
 
 import './globals.css'
 
-const title = `${siteConfig.name} — ${siteConfig.slogan.replace(/\.$/, '')}`
+const title = 'Ligana | A pessoa certa, na hora que você precisa'
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),
-  title: { default: title, template: `%s · ${siteConfig.name}` },
+  title: { default: title, template: `%s | ${siteConfig.name}` },
   description: siteConfig.description,
   applicationName: siteConfig.name,
   keywords: ['Ligana', 'trabalho', 'freela', 'Campo Grande', 'MS', 'oportunidades', 'contratar', 'renda'],
@@ -21,12 +20,12 @@ export const metadata: Metadata = {
     locale: 'pt_BR',
     url: '/',
     siteName: siteConfig.name,
-    title: `${siteConfig.name}: ${hero.title}`,
+    title,
     description: siteConfig.description,
   },
   twitter: {
     card: 'summary_large_image',
-    title: `${siteConfig.name}: ${hero.title}`,
+    title,
     description: siteConfig.description,
   },
   formatDetection: { telephone: false },

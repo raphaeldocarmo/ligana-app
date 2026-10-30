@@ -91,8 +91,30 @@ export const NEED_TIMINGS = [
   { value: 'no_current_need', label: 'Agora não, mas costumo precisar' },
 ] as const satisfies readonly Option[]
 
+/** Principal dificuldade da empresa para encontrar profissionais (uma resposta). */
+export const MAIN_DIFFICULTIES = [
+  { value: 'takes_too_long', label: 'Demora para encontrar alguém' },
+  { value: 'short_notice', label: 'Achar alguém em cima da hora' },
+  { value: 'no_shows', label: 'Gente que falta ou desiste' },
+  { value: 'lack_experience', label: 'Falta de experiência' },
+  { value: 'availability', label: 'Ninguém disponível no horário' },
+  { value: 'cost', label: 'Valor cobrado' },
+  { value: 'other', label: 'Outra' },
+] as const satisfies readonly Option[]
+
+/** Como a empresa encontra profissionais hoje (pode marcar mais de um). */
+export const CURRENT_SOURCING = [
+  { value: 'whatsapp_groups', label: 'Grupos de WhatsApp' },
+  { value: 'referrals', label: 'Indicação de conhecidos' },
+  { value: 'social_media', label: 'Redes sociais' },
+  { value: 'job_sites', label: 'Sites ou apps de vagas' },
+  { value: 'agency', label: 'Agência / terceirizada' },
+  { value: 'own_contacts', label: 'Minha lista de contatos' },
+  { value: 'other', label: 'Outro jeito' },
+] as const satisfies readonly Option[]
+
 export const WILLINGNESS_TO_PAY = [
-  { value: 'yes', label: 'Sim' },
+  { value: 'yes', label: 'Sim, se der certo' },
   { value: 'depends', label: 'Depende do valor' },
   { value: 'no', label: 'Não' },
 ] as const satisfies readonly Option[]

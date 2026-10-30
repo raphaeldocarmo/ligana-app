@@ -16,6 +16,7 @@ type AudienceSectionProps = {
     subtitle: string
     benefits: readonly Benefit[]
     cta: string
+    support: string
     formTitle: string
     formSubtitle: string
   }
@@ -76,11 +77,15 @@ export function AudienceSection({ audience, content, form }: AudienceSectionProp
             audience={audience}
             location="section"
             anchor={FORM_ANCHORS[audience]}
-            className="mt-8 w-full sm:w-auto lg:hidden"
+            className="mt-8 w-full sm:w-auto"
           >
             {content.cta}
             <Icon name="arrowDown" className="size-5 shrink-0" />
           </CtaLink>
+          <p className="mt-4 flex items-start gap-2 text-[0.95rem] text-ink-soft">
+            <Icon name="pin" className={`mt-0.5 size-4 shrink-0 ${tone.eyebrow}`} />
+            {content.support}
+          </p>
         </div>
 
         <div id={FORM_ANCHORS[audience]} className={`rounded-card border-2 p-5 shadow-card sm:p-8 ${tone.card}`}>

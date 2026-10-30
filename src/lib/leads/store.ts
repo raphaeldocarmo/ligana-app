@@ -72,6 +72,8 @@ export function toEmployerRow(lead: EmployerLead, consentAt: string) {
     headcount: lead.headcount,
     need_timing: lead.needTiming,
     frequency: lead.frequency,
+    main_difficulty: lead.mainDifficulty,
+    current_sourcing: lead.currentSourcing,
     willingness_to_pay: lead.willingnessToPay,
   }
 }

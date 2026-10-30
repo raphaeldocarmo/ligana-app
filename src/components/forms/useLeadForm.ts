@@ -95,7 +95,12 @@ export function useLeadForm<V extends Record<string, FormValue>>(audience: Audie
       const result = (await response.json().catch(() => null)) as LeadResponse | null
       if (response.ok && result?.ok) {
         setStatus('success')
-        track({ name: FORM_EVENTS[audience].success })
+        // A urgência (sem dado pessoal) permite medir "empresas com demanda imediata" no analytics.
+        if (audience === 'employer') {
+          track({ name: 'submit_company_form_success', need_timing: String(values.needTiming ?? '') })
+        } else {
+          track({ name: 'submit_worker_form_success' })
+        }
         return
       }
       if (result && !result.ok && result.fieldErrors) {
